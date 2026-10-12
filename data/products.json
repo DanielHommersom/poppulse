@@ -1,0 +1,28 @@
+{
+  "products": [
+    {
+      "id": "premium_unlock",
+      "store_id": "com.digitaldiamonds.poppulse.premium",
+      "type": "non_consumable",
+      "title": "Pop Pulse Premium",
+      "grants": [
+        "premium_unlock"
+      ],
+      "mock_price": "€3,99",
+      "unlocks": [
+        "All 30 Stage levels",
+        "Full Reflex stats & graph",
+        "5 premium themes",
+        "Gem & Pearl bubbles",
+        "Cosmic & Deep Sea sounds",
+        "No ads"
+      ],
+      "rc_entitlement": "premium"
+    }
+  ],
+  "revenuecat": {
+    "ios_api_key": "",
+    "android_api_key": "",
+    "_note": "Public SDK keys from RevenueCat ▸ Project ▸ API keys (appl_… / goog_…). Entitlement id per product: rc_entitlement."
+  }
+}

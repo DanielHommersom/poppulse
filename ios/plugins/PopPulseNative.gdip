@@ -1,0 +1,15 @@
+[config]
+name="PopPulseNative"
+binary="poppulse_native/PopPulseNative.xcframework"
+initialization="poppulse_native_init"
+deinitialization="poppulse_native_deinit"
+
+[dependencies]
+linked=[]
+embedded=[]
+system=["UIKit.framework", "AppTrackingTransparency.framework"]
+capabilities=[]
+files=[]
+linker_flags=[]
+
+[plist]

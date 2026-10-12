@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="ThemeData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://core/theme_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "ocean"
+display_name = "Ocean"
+palette_mode = "hue_rows"
+hue_start = 0.42
+hue_span = 0.25
+saturation = 0.75
+value = 1.0
+bubble_params = {"dim_mix": 0.22, "hot_add": 0.22, "glow_hi": 0.95}
+bg_top = Color(0, 0.08, 0.13, 1)
+bg_bottom = Color(0, 0.01, 0.04, 1)
+bg_accent = Color(0.1, 0.75, 0.9, 1)
+bg_grid = 0.05
+bg_vignette = 0.6
+plate_bg = Color(0.01, 0.07, 0.1, 1)
+plate_border = Color(0.2, 0.85, 0.95, 0.4)
+plate_glow = Color(0.1, 0.7, 0.9, 0.25)
+ui_accent = Color(0.15, 0.85, 0.95, 1)
+ui_cyan = Color(0.6, 1, 0.85, 1)
+ui_gold = Color(1, 0.85, 0.5, 1)
+ui_danger = Color(1, 0.4, 0.45, 1)
+ui_ok = Color(0.45, 1, 0.7, 1)
+panel_bg = Color(0.01, 0.07, 0.11, 0.97)
+panel_border = Color(0.2, 0.8, 0.95, 0.6)
+ink = Color(0, 0.05, 0.08, 1)
+sfx_pack = "deepsea"
+unlock = "premium"
+unlock_ref = "premium_unlock"

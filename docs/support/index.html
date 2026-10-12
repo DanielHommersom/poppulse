@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pop Pulse — Support</title>
+<meta name="description" content="Help and frequently asked questions for Pop Pulse, the neon bubble-popping game by Digital Diamonds.">
+<style>
+  :root {
+    --bg: #0b0b1a;
+    --card: #13122a;
+    --text: #ecebf7;
+    --muted: #a3a0c2;
+    --pink: #ff2e9a;
+    --cyan: #22d3ee;
+    --violet: #8b5cf6;
+    --border: #2a2748;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: radial-gradient(circle at 50% -10%, #241a45 0%, var(--bg) 60%);
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 48px 16px 80px; }
+  header { text-align: center; margin-bottom: 32px; }
+  .bubbles { display: flex; justify-content: center; gap: 8px; margin-bottom: 14px; }
+  .bubbles span {
+    width: 14px; height: 14px; border-radius: 50%;
+    box-shadow: 0 0 12px currentColor; background: currentColor;
+  }
+  .logo {
+    font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--cyan); text-shadow: 0 0 12px rgba(34, 211, 238, 0.6); margin-bottom: 8px;
+  }
+  h1 {
+    font-size: 30px; margin: 0 0 4px;
+    background: linear-gradient(90deg, var(--pink), var(--violet), var(--cyan));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .subtitle { color: var(--muted); font-size: 15px; }
+  .contact-card {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(255, 46, 154, 0.14), rgba(139, 92, 246, 0.14));
+    border: 1px solid rgba(255, 46, 154, 0.4); border-radius: 14px;
+    padding: 20px 16px; margin-bottom: 24px;
+  }
+  .contact-card a {
+    display: inline-block; margin-top: 10px; padding: 10px 22px; border-radius: 999px;
+    background: var(--pink); color: #fff; font-weight: 700; text-decoration: none;
+    box-shadow: 0 0 18px rgba(255, 46, 154, 0.55); overflow-wrap: anywhere;
+  }
+  .contact-card .muted { font-size: 13px; margin-top: 10px; }
+  nav.toc { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; }
+  nav.toc a {
+    font-size: 13px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 999px;
+    color: var(--muted); text-decoration: none;
+  }
+  nav.toc a:hover { color: var(--text); border-color: var(--cyan); }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 24px 24px 8px; margin-bottom: 20px; box-shadow: 0 0 40px rgba(255, 46, 154, 0.06);
+  }
+  .card > h2 {
+    margin: 0 0 6px; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--pink);
+  }
+  h3 { font-size: 16px; color: var(--cyan); margin: 22px 0 6px; }
+  p, li { font-size: 15px; }
+  ul { padding-left: 20px; }
+  a { color: var(--cyan); text-decoration: none; overflow-wrap: anywhere; }
+  a:hover { text-decoration: underline; }
+  .muted { color: var(--muted); }
+  footer { text-align: center; margin-top: 32px; color: var(--muted); font-size: 13px; }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="bubbles" aria-hidden="true">
+      <span style="color:#ff2e9a"></span><span style="color:#8b5cf6"></span><span style="color:#22d3ee"></span><span style="color:#34d399"></span><span style="color:#fbbf24"></span>
+    </div>
+    <div class="logo">Pop Pulse</div>
+    <h1>Support</h1>
+    <div class="subtitle">Need help with the game? Start here.</div>
+  </header>
+
+  <div class="contact-card">
+    <div>Can't find your answer below? We're happy to help.</div>
+    <a href="mailto:digitaldiamonds.ai@gmail.com?subject=Pop%20Pulse%20support">digitaldiamonds.ai@gmail.com</a>
+    <div class="muted">Please mention your device model, iOS version and the app version (shown at the bottom of Settings).</div>
+  </div>
+
+  <nav class="toc" aria-label="Topics">
+    <a href="#playing">Playing</a>
+    <a href="#progress">Progress</a>
+    <a href="#premium">Premium &amp; purchases</a>
+    <a href="#ads">Ads &amp; privacy</a>
+    <a href="#settings">Sound &amp; accessibility</a>
+    <a href="#problems">Problems</a>
+  </nav>
+
+  <div class="card" id="playing">
+    <h2>Playing</h2>
+
+    <h3>How do I play?</h3>
+    <p>
+      Pop the bubbles that light up — fast and accurately. Choose a mode on the main screen
+      and tap <strong>PLAY</strong>. Tapping a bubble that isn't lit costs you, so precision
+      matters as much as speed.
+    </p>
+
+    <h3>What are the game modes?</h3>
+    <ul>
+      <li><strong>Score</strong> — pop as many lit bubbles as you can before the timer runs out. Quick hits build a combo multiplier; misses break it.</li>
+      <li><strong>Reflex</strong> — wait for a bubble to flash and tap it as fast as possible. Your reaction time is measured in milliseconds. Tapping too early counts as a false start.</li>
+      <li><strong>Memory</strong> — watch the sequence of bubbles, then repeat it. Each round adds one more step.</li>
+      <li><strong>Stages</strong> — 30 hand-made levels with their own goals. Earn up to 3 stars per level.</li>
+      <li><strong>Pass &amp; Play</strong> — 2 to 4 players take turns on one device. Names are optional.</li>
+    </ul>
+
+    <h3>What is the Daily Challenge?</h3>
+    <p>
+      Every day there is a new challenge, the same for every player. Your first attempt is
+      the official one; after that you can keep practising. Play every day to build a streak.
+    </p>
+
+    <h3>What are seasonal events?</h3>
+    <p>
+      From time to time a limited-time event appears, with its own challenges and a free
+      event theme while it runs. A gift icon on the main screen shows when an event is live.
+    </p>
+
+    <h3>Can I pause a game?</h3>
+    <p>
+      Yes. Tap the pause button during play, or simply leave the app — the game pauses
+      automatically. Tap <strong>RESUME</strong> to continue after a short countdown.
+    </p>
+  </div>
+
+  <div class="card" id="progress">
+    <h2>Progress</h2>
+
+    <h3>Where can I see my records and achievements?</h3>
+    <p>Open <strong>Settings</strong> (the gear icon at the top right) and tap <strong>Records</strong>.</p>
+
+    <h3>Is my progress saved?</h3>
+    <p>
+      Yes, automatically after every game. Your progress is stored only on your device, so
+      it is not linked to an account.
+    </p>
+
+    <h3>I deleted the app or got a new phone. Is my progress gone?</h3>
+    <p>
+      Unfortunately, records, stars and achievements are stored only on the device and are
+      removed when you delete the app. A new iPhone restored from an iCloud or computer
+      backup of your old one normally brings the game data along. Premium is never lost — see
+      <a href="#restore">Restore Purchases</a>.
+    </p>
+
+    <h3>How do I change the look of the game?</h3>
+    <p>
+      Go to <strong>Settings ▸ Style</strong> to choose a theme, bubble style and sound pack.
+    </p>
+  </div>
+
+  <div class="card" id="premium">
+    <h2>Premium &amp; purchases</h2>
+
+    <h3>What do I get with Premium?</h3>
+    <p>Pop Pulse Premium is a single, one-time purchase — no subscription. It unlocks:</p>
+    <ul>
+      <li>all 30 Stage levels (the first 12 are free);</li>
+      <li>full Reflex stats and graph;</li>
+      <li>5 premium themes;</li>
+      <li>Gem and Pearl bubbles;</li>
+      <li>Cosmic and Deep Sea sound packs;</li>
+      <li>no ads, ever.</li>
+    </ul>
+    <p>Find it under <strong>Settings ▸ Premium</strong>. The price is shown in your local currency.</p>
+
+    <h3 id="restore">I bought Premium but it isn't unlocked</h3>
+    <p>
+      Go to <strong>Settings ▸ Purchases ▸ RESTORE PURCHASES</strong> while signed in with
+      the same Apple ID you used to buy it. Premium is also restored automatically when you
+      reinstall the app or use a new device, and it works for family members through
+      Family Sharing.
+    </p>
+
+    <h3>My purchase says "Waiting for approval"</h3>
+    <p>
+      This happens with <em>Ask to Buy</em> in Family Sharing. Once the family organiser
+      approves the request, Premium unlocks automatically — no need to buy again.
+    </p>
+
+    <h3>How do I get a refund?</h3>
+    <p>
+      Payments and refunds are handled by Apple. You can request a refund at
+      <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener">reportaproblem.apple.com</a>.
+    </p>
+  </div>
+
+  <div class="card" id="ads">
+    <h2>Ads &amp; privacy</h2>
+
+    <h3>Why do I see ads?</h3>
+    <p>
+      Ads keep Pop Pulse free. They never appear during play. Occasionally a full-screen ad
+      appears between games, and some options — such as continuing a run, one more official
+      Daily Challenge try, or testing a premium theme — let you choose to watch a short video.
+      Premium removes all ads.
+    </p>
+
+    <h3>Why does the game ask about tracking?</h3>
+    <p>
+      After your first game, Pop Pulse explains how ads work and iOS asks whether ads may use
+      your activity to be more relevant. Where required, you are also asked for ad consent
+      first. Either choice is fine — the game plays exactly the same; you just see less
+      relevant ads if you decline.
+    </p>
+
+    <h3>How do I change my ad or tracking choice?</h3>
+    <p>
+      In the game: <strong>Settings ▸ Privacy &amp; Legal ▸ CHANGE AD CONSENT</strong>. This
+      button appears in regions where ad consent is required by law (such as the EU, UK and
+      Switzerland), after your first game. For tracking: iOS <span class="muted">Settings ▸ Privacy &amp; Security ▸ Tracking</span>.
+    </p>
+
+    <h3>What data do you collect?</h3>
+    <p>
+      No account is needed and we don't collect your name or email. Read the full
+      <a href="../">Privacy Policy</a>.
+    </p>
+  </div>
+
+  <div class="card" id="settings">
+    <h2>Sound &amp; accessibility</h2>
+
+    <h3>How do I turn sound or vibration off?</h3>
+    <p>
+      Open <strong>Settings</strong> and use the <strong>Sound</strong> and
+      <strong>Haptics</strong> switches. Your choice is remembered. Pop Pulse also respects
+      your iPhone's silent switch.
+    </p>
+
+    <h3>The animations are too much for me</h3>
+    <p>
+      Under <strong>Settings ▸ Accessibility ▸ Reduce motion</strong> choose
+      <em>On</em> for calm fades instead of bouncing and flashing effects. <em>Like iOS</em>
+      follows your iPhone's own Reduce Motion setting.
+    </p>
+
+    <h3>I find it hard to tell the colours apart</h3>
+    <p>
+      Turn on <strong>Settings ▸ Accessibility ▸ Symbols on lit bubbles</strong> so lit
+      bubbles are marked with a symbol as well as colour.
+    </p>
+  </div>
+
+  <div class="card" id="problems">
+    <h2>Problems</h2>
+
+    <h3>The game feels slow or stutters</h3>
+    <p>
+      Close other apps, make sure Low Power Mode is off, and restart the game. If it keeps
+      happening, email us with your device model and iOS version.
+    </p>
+
+    <h3>My taps don't seem to register</h3>
+    <p>
+      Remove any screen protector smudges and make sure you tap the lit bubble itself. In
+      Reflex, wait for the flash — tapping too early is counted as a false start.
+    </p>
+
+    <h3>I found a bug or the app crashed</h3>
+    <p>
+      Please email
+      <a href="mailto:digitaldiamonds.ai@gmail.com?subject=Pop%20Pulse%20bug">digitaldiamonds.ai@gmail.com</a>
+      with what happened, the game mode, your device model, iOS version and app version.
+      Screenshots or a screen recording help a lot.
+    </p>
+
+    <h3>I have an idea for the game</h3>
+    <p>
+      We'd love to hear it! Send us an email, or leave a review on the App Store.
+    </p>
+  </div>
+
+  <footer>
+    Pop Pulse by Digital Diamonds · <a href="../">Privacy Policy</a> · <a href="../terms/">Terms of Use</a>
+  </footer>
+</div>
+</body>
+</html>

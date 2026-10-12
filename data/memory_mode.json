@@ -1,0 +1,15 @@
+{
+  "board": [3, 3],
+  "start_length": 3,
+  "gap_before_round": 0.7,
+  "difficulty": {
+    "axis": "round",
+    "x_start": 1,
+    "x_end": 15,
+    "easing": "ease_out",
+    "params": {
+      "show_time": [0.62, 0.26],
+      "show_gap": [0.18, 0.07]
+    }
+  }
+}

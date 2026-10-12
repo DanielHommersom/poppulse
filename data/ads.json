@@ -1,0 +1,35 @@
+{
+  "units": {
+    "ios": {
+      "rewarded": {
+        "test": "ca-app-pub-3940256099942544/1712485313",
+        "release": "ca-app-pub-3366446717708247/3435736524"
+      },
+      "interstitial": {
+        "test": "ca-app-pub-3940256099942544/4411468910",
+        "release": "ca-app-pub-3366446717708247/9123177472"
+      }
+    },
+    "android": {
+      "rewarded": {
+        "test": "ca-app-pub-3940256099942544/5224354917",
+        "release": "ca-app-pub-0000000000000000/0000000000"
+      },
+      "interstitial": {
+        "test": "ca-app-pub-3940256099942544/1033173712",
+        "release": "ca-app-pub-0000000000000000/0000000000"
+      }
+    }
+  },
+  "interstitial": {
+    "min_sessions": 2,
+    "runs_between": 3,
+    "min_seconds_between": 120,
+    "skip_after_record": true,
+    "skip_after_rewarded": true,
+    "placements": [
+      "results_to_menu",
+      "results_to_next"
+    ]
+  }
+}

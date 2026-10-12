@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ThemeData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://core/theme_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "neon"
+display_name = "Neon"
+palette_mode = "hue_rows"
+hue_start = 0.0
+hue_span = 0.85
+saturation = 0.78
+value = 1.0
+bubble_params = {}
+sfx_pack = "classic"
+unlock = "free"

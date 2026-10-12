@@ -1,0 +1,32 @@
+{
+  "board": [5, 6],
+  "duration": 60.0,
+  "empty_gap": 0.12,
+  "difficulty": {
+    "axis": "time",
+    "x_start": 0,
+    "x_end": 50,
+    "easing": "linear",
+    "params": {
+      "spawn_interval": [0.9, 0.34],
+      "lifetime": [1.9, 0.8],
+      "max_active": [1, 4]
+    }
+  },
+  "first_run": {
+    "x_end": 60,
+    "params": {
+      "spawn_interval": [1.15, 0.4],
+      "lifetime": [2.6, 0.95],
+      "max_active": [1, 3]
+    }
+  },
+  "points": {
+    "base": 100,
+    "speed_bonus": 100,
+    "speed_window": 0.9,
+    "combo_step": 5,
+    "max_multiplier": 8,
+    "wrong_penalty": 50
+  }
+}

@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="ThemeData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://core/theme_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "sunset"
+display_name = "Sunset"
+palette_mode = "hue_rows"
+hue_start = 0.9
+hue_span = 0.26
+saturation = 0.8
+value = 1.0
+bubble_params = {"dim_mix": 0.2}
+bg_top = Color(0.14, 0.03, 0.09, 1)
+bg_bottom = Color(0.03, 0.01, 0.03, 1)
+bg_accent = Color(1, 0.4, 0.2, 1)
+bg_grid = 0.04
+bg_vignette = 0.6
+plate_bg = Color(0.09, 0.04, 0.06, 1)
+plate_border = Color(1, 0.5, 0.3, 0.4)
+plate_glow = Color(1, 0.35, 0.2, 0.22)
+ui_accent = Color(1, 0.45, 0.25, 1)
+ui_cyan = Color(1, 0.82, 0.45, 1)
+ui_gold = Color(1, 0.9, 0.5, 1)
+ui_danger = Color(1, 0.25, 0.4, 1)
+ui_ok = Color(0.6, 1, 0.5, 1)
+panel_bg = Color(0.11, 0.05, 0.07, 0.97)
+panel_border = Color(1, 0.45, 0.3, 0.6)
+ink = Color(0.12, 0.03, 0.04, 1)
+sfx_pack = "classic"
+unlock = "free"

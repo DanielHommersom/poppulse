@@ -1,0 +1,30 @@
+{
+  "identifier": "4F2C1A00-POPPULSE-STOREKIT",
+  "nonRenewingSubscriptions": [],
+  "products": [
+    {
+      "displayPrice": "3.99",
+      "familyShareable": true,
+      "internalID": "6740000001",
+      "localizations": [
+        {
+          "description": "All 30 levels, full Reflex stats, 5 premium themes, extra bubbles & sounds, and no ads.",
+          "displayName": "Pop Pulse Premium",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.digitaldiamonds.poppulse.premium",
+      "referenceName": "Premium Unlock",
+      "type": "NonConsumable"
+    }
+  ],
+  "settings": {
+    "_askToBuyEnabled": false,
+    "_failTransactionsEnabled": false
+  },
+  "subscriptionGroups": [],
+  "version": {
+    "major": 3,
+    "minor": 0
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "packs": [
+    {
+      "id": "classic", "name": "Classic", "unlock": "free",
+      "pop": { "type": "bloop" },
+      "miss": { "freq": 140, "len": 0.22, "wave": "square", "gain": 0.3, "sweep": -40 },
+      "expire": { "freq": 330, "len": 0.2, "wave": "sine", "gain": 0.22, "sweep": -700 },
+      "tick": { "freq": 1046.5, "len": 0.07, "wave": "sine", "gain": 0.3, "sweep": 0 },
+      "go": { "freq": 1318.5, "len": 0.28, "wave": "sine", "gain": 0.35, "sweep": 300 }
+    },
+    {
+      "id": "bubblewrap", "name": "Bubble Wrap", "unlock": "free",
+      "pop": { "type": "snap", "pitch": 0.55 },
+      "miss": { "freq": 110, "len": 0.16, "wave": "noise", "gain": 0.28, "sweep": 0 },
+      "expire": { "freq": 220, "len": 0.14, "wave": "noise", "gain": 0.12, "sweep": 0 },
+      "tick": { "freq": 900, "len": 0.04, "wave": "noise", "gain": 0.22, "sweep": 0 },
+      "go": { "freq": 880, "len": 0.2, "wave": "sine", "gain": 0.3, "sweep": 500 }
+    },
+    {
+      "id": "arcade", "name": "Arcade 8-bit", "unlock": "free",
+      "pop": { "type": "chip", "pitch": 0.5 },
+      "miss": { "freq": 98, "len": 0.25, "wave": "pulse", "gain": 0.22, "sweep": -60 },
+      "expire": { "freq": 392, "len": 0.18, "wave": "pulse", "gain": 0.14, "sweep": -900 },
+      "tick": { "freq": 1046.5, "len": 0.05, "wave": "pulse", "gain": 0.16, "sweep": 0 },
+      "go": { "freq": 784, "len": 0.3, "wave": "pulse", "gain": 0.2, "sweep": 0, "arp": [1.0, 1.25, 1.5, 2.0] }
+    },
+    {
+      "id": "deepsea", "name": "Deep Sea", "unlock": "premium", "unlock_ref": "premium_unlock",
+      "pop": { "type": "drop", "pitch": 0.75 },
+      "miss": { "freq": 90, "len": 0.3, "wave": "sine", "gain": 0.35, "sweep": -20 },
+      "expire": { "freq": 300, "len": 0.3, "wave": "sine", "gain": 0.15, "sweep": -250 },
+      "tick": { "freq": 880, "len": 0.08, "wave": "sine", "gain": 0.22, "sweep": 0 },
+      "go": { "freq": 660, "len": 0.4, "wave": "sine", "gain": 0.3, "sweep": 700 }
+    },
+    {
+      "id": "cosmic", "name": "Cosmic", "unlock": "premium", "unlock_ref": "premium_unlock",
+      "pop": { "type": "bell", "pitch": 1.0 },
+      "miss": { "freq": 82, "len": 0.35, "wave": "sine", "gain": 0.35, "sweep": -30 },
+      "expire": { "freq": 523, "len": 0.35, "wave": "sine", "gain": 0.14, "sweep": -400 },
+      "tick": { "freq": 1568, "len": 0.09, "wave": "sine", "gain": 0.2, "sweep": 0 },
+      "go": { "freq": 1046.5, "len": 0.45, "wave": "sine", "gain": 0.3, "sweep": 0, "arp": [1.0, 1.5, 2.0] }
+    }
+  ]
+}

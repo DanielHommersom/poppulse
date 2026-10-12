@@ -1,0 +1,39 @@
+{
+  "templates": [
+    {
+      "mode": "score",
+      "title": "SCORE · {duration}s · max {max_active} at once",
+      "choices": {
+        "duration": [30, 45, 60],
+        "difficulty/params/max_active/1": [2, 3, 4]
+      },
+      "labels": { "max_active": "difficulty/params/max_active/1" }
+    },
+    {
+      "mode": "score",
+      "title": "SCORE SPRINT · {duration}s · fast fade",
+      "choices": {
+        "duration": [20, 30],
+        "difficulty/params/lifetime": [[1.4, 0.7], [1.2, 0.75]],
+        "difficulty/x_end": [15, 25]
+      }
+    },
+    {
+      "mode": "reflex",
+      "title": "REFLEX · {stimuli} flashes",
+      "choices": {
+        "stimuli": [5, 8, 12, 15],
+        "wait_min": [0.6, 1.0],
+        "wait_max": [2.0, 3.5]
+      }
+    },
+    {
+      "mode": "memory",
+      "title": "MEMORY · start at {start_length}",
+      "choices": {
+        "start_length": [3, 4, 5],
+        "difficulty/params/show_time": [[0.5, 0.25], [0.4, 0.22]]
+      }
+    }
+  ]
+}

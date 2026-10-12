@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="ThemeData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://core/theme_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "contrast"
+display_name = "Contrast"
+palette_mode = "list"
+palette = PackedColorArray(0.9, 0.62, 0, 1, 0.34, 0.71, 0.91, 1, 0, 0.62, 0.45, 1, 0.94, 0.89, 0.26, 1, 0, 0.45, 0.7, 1, 0.8, 0.47, 0.65, 1)
+bubble_params = {"dim_mix": 0.1, "hot_add": 0.35, "rim_lo": 0.25, "rim_hi": 0.8, "glow_hi": 1.0}
+bg_top = Color(0, 0, 0, 1)
+bg_bottom = Color(0, 0, 0, 1)
+bg_accent = Color(0.9, 0.62, 0, 1)
+bg_grid = 0.0
+bg_vignette = 0.0
+plate_bg = Color(0.04, 0.04, 0.04, 1)
+plate_border = Color(1, 1, 1, 0.6)
+plate_glow = Color(1, 1, 1, 0.1)
+ui_accent = Color(0.9, 0.62, 0, 1)
+ui_cyan = Color(0.34, 0.71, 0.91, 1)
+ui_gold = Color(0.94, 0.89, 0.26, 1)
+ui_danger = Color(0.95, 0.4, 0.4, 1)
+ui_ok = Color(0, 0.75, 0.55, 1)
+panel_bg = Color(0.05, 0.05, 0.05, 0.98)
+panel_border = Color(1, 1, 1, 0.7)
+ink = Color(0, 0, 0, 1)
+sfx_pack = "classic"
+unlock = "free"

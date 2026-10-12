@@ -1,0 +1,23 @@
+{
+  "achievements": [
+    { "id": "first_pop", "name": "Pop!", "desc": "Pop your first bubble", "icon": "bubble", "stat": "fidget_pops", "goal": 1 },
+    { "id": "stress_relief", "name": "Stress Relief", "desc": "Pop 500 bubbles just for fun", "icon": "bubble", "stat": "fidget_pops", "goal": 500 },
+    { "id": "first_run", "name": "Warmed Up", "desc": "Finish your first run", "icon": "play", "stat": "total_runs", "goal": 1 },
+    { "id": "runs_100", "name": "Regular", "desc": "Finish 100 runs", "icon": "medal", "stat": "total_runs", "goal": 100 },
+    { "id": "combo_25", "name": "On a Roll", "desc": "Reach a 25 combo in Score Mode", "icon": "bolt", "stat": "max_combo", "goal": 25 },
+    { "id": "combo_50", "name": "Combo Master", "desc": "Reach a 50 combo in Score Mode", "icon": "bolt", "stat": "max_combo", "goal": 50 },
+    { "id": "score_10k", "name": "Five Digits", "desc": "Score 10,000 points in one run", "icon": "trophy", "stat": "score_best", "goal": 10000 },
+    { "id": "score_25k", "name": "High Roller", "desc": "Score 25,000 points in one run", "icon": "crown", "stat": "score_best", "goal": 25000 },
+    { "id": "flawless", "name": "Flawless", "desc": "Finish a Score run with 100% accuracy (40+ hits)", "icon": "check", "stat": "perfect_runs", "goal": 1 },
+    { "id": "reflex_250", "name": "Quick Hands", "desc": "Reflex average under 250 ms", "icon": "target", "stat": "reflex_best_avg", "goal": 250, "compare": "lte" },
+    { "id": "reflex_200", "name": "Lightning", "desc": "A single Reflex tap under 200 ms", "icon": "bolt", "stat": "reflex_best_single", "goal": 200, "compare": "lte" },
+    { "id": "memory_8", "name": "Good Memory", "desc": "Repeat a pattern of 8", "icon": "brain", "stat": "memory_best", "goal": 8 },
+    { "id": "memory_12", "name": "Photographic", "desc": "Repeat a pattern of 12", "icon": "brain", "stat": "memory_best", "goal": 12 },
+    { "id": "stage_10", "name": "Getting There", "desc": "Clear Stage level 10", "icon": "stages", "stat": "stage_cleared", "goal": 10 },
+    { "id": "stage_30", "name": "Stage Hero", "desc": "Clear all 30 Stage levels", "icon": "stages", "stat": "stage_cleared", "goal": 30 },
+    { "id": "stage_stars", "name": "Perfectionist", "desc": "Get 3 stars on all 30 levels", "icon": "star", "stat": "stage_three_stars", "goal": 30 },
+    { "id": "daily_first", "name": "Daily Habit", "desc": "Complete a Daily Challenge", "icon": "calendar", "stat": "daily_count", "goal": 1 },
+    { "id": "streak_7", "name": "On Fire", "desc": "Reach a 7-day streak", "icon": "flame", "stat": "streak_best", "goal": 7 },
+    { "id": "streak_30", "name": "Unstoppable", "desc": "Reach a 30-day streak", "icon": "flame", "stat": "streak_best", "goal": 30 }
+  ]
+}

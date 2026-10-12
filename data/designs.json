@@ -1,0 +1,11 @@
+{
+  "designs": [
+    { "id": "round", "name": "Classic", "shape": 0, "unlock": "free" },
+    { "id": "tile", "name": "Tile", "shape": 1, "unlock": "free" },
+    { "id": "jelly", "name": "Jelly", "shape": 4, "unlock": "achievement", "unlock_ref": "first_run" },
+    { "id": "heart", "name": "Heart", "shape": 2, "unlock": "achievement", "unlock_ref": "daily_first" },
+    { "id": "star", "name": "Star", "shape": 3, "unlock": "achievement", "unlock_ref": "stage_10" },
+    { "id": "gem", "name": "Gem", "shape": 5, "unlock": "premium", "unlock_ref": "premium_unlock" },
+    { "id": "pearl", "name": "Pearl", "shape": 6, "unlock": "premium", "unlock_ref": "premium_unlock" }
+  ]
+}

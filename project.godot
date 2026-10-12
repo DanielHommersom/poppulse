@@ -1,0 +1,71 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[admob]
+
+general/android/enabled=false
+general/ios/app_id="ca-app-pub-3366446717708247~4912469721"
+
+[application]
+
+config/name="Pop Pulse"
+config/version="1.0"
+run/main_scene="res://main.tscn"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="PopIt"
+config/quit_on_go_back=false
+config/features=PackedStringArray("4.7", "Mobile")
+boot_splash/bg_color=Color(0.02, 0.015, 0.05, 1)
+boot_splash/image="res://store/launch/launch@3x.png"
+config/icon="res://store/icon/icon_1024.png"
+
+[audio]
+
+general/ios/mix_with_others=true
+
+[autoload]
+
+SaveData="*res://autoload/save_data.gd"
+Platform="*res://autoload/platform.gd"
+Events="*res://autoload/events.gd"
+ThemeManager="*res://autoload/theme_manager.gd"
+Sfx="*res://autoload/sfx.gd"
+Achievements="*res://autoload/achievements.gd"
+
+[display]
+
+window/size/viewport_width=720
+window/size/viewport_height=1280
+window/size/window_width_override=432
+window/size/window_height_override=864
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=1
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/admob/plugin.cfg", "res://addons/godotx_att/plugin.cfg", "res://addons/godotx_revenue_cat/plugin.cfg", "res://addons/poppulse_native/plugin.cfg")
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+buffering/android/use_accumulated_input=false
+buffering/android/use_input_buffering=true
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(0.02, 0.015, 0.05, 1)
