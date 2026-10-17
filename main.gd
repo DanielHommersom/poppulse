@@ -97,6 +97,7 @@ func _ready() -> void:
 	ui.add_child(stats_panel)
 	premium_panel = PremiumPanel.new()
 	ui.add_child(premium_panel)
+	premium_panel.level_trial_requested.connect(_rewarded_level_trial)
 	var att_prompt := AttPrompt.new()
 	ui.add_child(att_prompt)
 	Platform.tracking_explainer_requested.connect(att_prompt.open)
@@ -122,19 +123,18 @@ func _ready() -> void:
 		hud.menu.select("party")
 		_party_selected = true
 		_update_menu_hint())
-	stage_select.locked_tapped.connect(func(_id: int, reason: String) -> void:
+	stage_select.locked_tapped.connect(func(id: int, reason: String) -> void:
 		if reason == "premium":
-			open_premium("locked_item"))
+			open_premium("locked_item", id))
 	stats_panel.premium_requested.connect(open_premium.bind("locked_item"))
 	Platform.entitlements_changed.connect(_on_entitlements_changed)
 	theme_picker = ThemePicker.new()
 	ui.add_child(theme_picker)
 	theme_picker.visibility_changed.connect(_on_picker_visibility)
 	theme_picker.locked_tapped.connect(_on_style_locked)
-	theme_picker.trial_requested.connect(func(id: String) -> void:
-		if await rewarded_theme_trial(id):
-			ThemeManager.apply(id, true)
-			theme_picker.close())
+	theme_picker.trial_requested.connect(func(kind: String, id: String) -> void:
+		if await rewarded_style_trial(kind, id):
+			theme_picker.use_selected())
 	toast = Toast.new()
 	add_child(toast)
 	Achievements.unlocked.connect(func(def: Dictionary) -> void:
@@ -576,8 +576,10 @@ func _leave_results(next: Callable, placement: String) -> void:
 	var cfg: Dictionary = GameMode.load_config("res://data/ads.json").get("interstitial", {})
 	var ctx := {
 		"sessions": int(SaveData.section("stats").sessions),
+		"session_runs": SaveData.session_runs,
 		"premium": Platform.ads_disabled(),
 		"is_record": _last_is_new,
+		"first_run_of_mode": int(SaveData.mode_stats(mode.mode_id).played) <= 1,
 		"rewarded": _rewarded_this_break,
 		"placement": placement,
 		"now": int(Time.get_unix_time_from_system()),
@@ -646,26 +648,42 @@ func _rewarded_daily_retry() -> void:
 	_on_play()
 
 
-## Premium theme for 24 h (style sheet).
-func rewarded_theme_trial(theme_id: String) -> bool:
-	var ok: bool = await Platform.show_rewarded("theme_trial")
+## Premium theme / bubble style / sound pack for 24 h (style sheet).
+func rewarded_style_trial(kind: String, id: String) -> bool:
+	var ok: bool = await Platform.show_rewarded("style_trial")
 	if ok:
-		SaveData.section("unlocks").trials[theme_id] = int(Time.get_unix_time_from_system()) + 86400
+		SaveData.section("unlocks").trials[ThemeManager.trial_key(kind, id)] = int(Time.get_unix_time_from_system()) + 86400
 		SaveData.mark_dirty()
 		Platform.entitlements_changed.emit()
 	return ok
 
 
+## A locked Premium level, played once after a video. The pass covers exactly
+## one run: RETRY / NEXT afterwards go through the lock again.
+var _level_pass := 0
+
+
+func _rewarded_level_trial(level_id: int) -> void:
+	var ok: bool = await Platform.show_rewarded("level_trial")
+	_rewarded_this_break = true  # no interstitial right after this video
+	if not ok:
+		return
+	premium_panel.close()
+	_level_pass = level_id
+	_play_stage(level_id)
+
+
 # --- Premium & upsell (US-29) ---------------------------------------------------------
 
 ## Solicited: the player tapped something locked or "Premium" — always allowed.
-func open_premium(context := "menu") -> void:
+func open_premium(context := "menu", level_id := 0) -> void:
 	if state == GameState.PLAYING or state == GameState.COUNTDOWN or state == GameState.PAUSED:
 		return
 	for m in [stats_panel, stage_select, settings]:
 		if (m as Modal).visible:
 			(m as Modal).close()
-	premium_panel.open_for(context)
+	# Only offer the one-off run when the level is reachable by progress.
+	premium_panel.open_for(context, level_id if level_id > 0 and StageLevels.is_unlocked(level_id) else 0)
 
 
 ## Unsolicited offer after a record or level 12: never mid-run, never at start,
@@ -1032,6 +1050,7 @@ func _on_finished(results: Dictionary) -> void:
 	Platform.start_ads_after_first_game()  # consent → ATT → ads, once, after the first game
 	var ads_state := SaveData.section("ads")
 	ads_state.runs_since = int(ads_state.get("runs_since", 0)) + 1
+	SaveData.session_runs += 1
 	hud.banner(_end_banner(results), Color.WHITE, 150, 0.3)
 	Sfx.play_go()
 	Platform.haptic(Platform.Haptic.HEAVY)
@@ -1130,7 +1149,7 @@ func _stage_results_spec(r: Dictionary, is_new: bool) -> Dictionary:
 		"links": [],
 	}
 	if has_next and Premium.stage_level_locked(lvl + 1):
-		spec.primary = ["NEXT LEVEL  ♛", open_premium.bind("level12")]
+		spec.primary = ["NEXT LEVEL  ♛", open_premium.bind("level12", lvl + 1)]
 		spec.links.append(["RETRY", UiStyle.CYAN, _play_stage.bind(lvl)])
 	elif has_next:
 		spec.primary = ["NEXT LEVEL", _play_stage.bind(lvl + 1)]
@@ -1148,11 +1167,12 @@ func _open_stage_select() -> void:
 
 
 func _play_stage(level_id: int) -> void:
-	if Premium.stage_level_locked(level_id):
-		open_premium("locked_item")
+	if Premium.stage_level_locked(level_id) and _level_pass != level_id:
+		open_premium("locked_item", level_id)
 		return
 	if not StageLevels.is_unlocked(level_id):
 		return
+	_level_pass = 0  # used up by this run
 	stage_level = level_id
 	_on_play()
 

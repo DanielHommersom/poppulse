@@ -561,7 +561,7 @@ func s_rewarded() -> void:
 		if it.id == "candy":
 			main.theme_picker._select(it)
 	await wait(0.3)
-	print("trial btn visible=", main.theme_picker._trial.visible, " sheet=", main.theme_picker._sheet.get_rect(), " can=", Platform.can_show_rewarded("theme_trial"))
+	print("trial btn visible=", main.theme_picker._trial.visible, " sheet=", main.theme_picker._sheet.get_rect(), " can=", Platform.can_show_rewarded("style_trial"))
 	await shot("rewarded_theme_trial")
 	main.theme_picker._on_trial()
 	await wait(1.0)
@@ -835,3 +835,39 @@ func s_att_prompt() -> void:
 	main.ui.get_children().filter(func(c): return c is AttPrompt)[0].open()
 	await wait(0.6)
 	await shot("att_prompt")
+
+
+func s_level_trial() -> void:
+	# Rewarded "play this level once": locked level 13 after clearing 1–12.
+	SaveData.section("unlocks").entitlements = {}
+	Platform.ads_started = true
+	for i in range(1, 13):
+		SaveData.set_stars(i, 2)
+	main.hud.menu._on_card("stage")
+	await wait(0.3)
+	main._on_menu_play()
+	await wait(0.5)
+	main.stage_select._press_scroll = main.stage_select.scroll.scroll_vertical
+	main.stage_select._on_cell(13)
+	await wait(0.6)
+	await shot("level_trial_offer")
+	main.premium_panel.level_trial_requested.emit(13)
+	await wait(4.0)
+	print("after trial: state=", main.state, " stage_level=", main.stage_level, " pass=", main._level_pass)
+	await shot("level_trial_running")
+
+
+func s_style_trial() -> void:
+	SaveData.section("unlocks").entitlements = {}
+	Platform.ads_started = true
+	main._open_themes()
+	main.theme_picker._set_tab("design")
+	await wait(0.3)
+	for it in main.theme_picker._items():
+		if it.id == "gem":
+			main.theme_picker._select(it)
+	await wait(0.4)
+	await shot("style_trial_offer")
+	main.theme_picker._on_trial()
+	await wait(3.5)
+	print("design now=", SaveData.get_setting("design"), " picker open=", main.theme_picker.visible)

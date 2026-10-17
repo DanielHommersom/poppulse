@@ -1,9 +1,11 @@
 extends Node
 ## Dev-only: renders the App Store assets into res://store/.
-##   Godot --path . res://tools/store_assets.tscn -- --test-save --fresh
+##   Godot --path . res://tools/store_assets.tscn -- --test-save --fresh --store-shot
 ## • icon in every iOS size (store/icon/)
 ## • launch images matching the first frame (store/launch/)
 ## • screenshots for 6.9" iPhone (1320×2868) and 13" iPad (2064×2752) (store/screenshots/)
+## • In-App Purchase review screenshot: the Premium screen (store/iap/)
+## Only the IAP screenshot:  … -- --test-save --fresh --store-shot --only=iap
 ## The game renders inside an offscreen SubViewport at the exact store size
 ## while keeping its 720-wide design units (size_2d_override).
 
@@ -18,12 +20,17 @@ var main: Node
 
 
 func _ready() -> void:
-	for d in ["store/icon", "store/launch", "store/screenshots"]:
+	for d in ["store/icon", "store/launch", "store/screenshots", "store/iap"]:
 		DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://" + d))
+	if "--only=iap" in OS.get_cmdline_user_args():
+		await _iap_review()
+		get_tree().quit()
+		return
 	await _icon()
 	await _launch()
 	for dev in DEVICES:
 		await _screenshots(dev, DEVICES[dev])
+	await _iap_review()
 	print("store assets done")
 	get_tree().quit()
 
@@ -170,6 +177,23 @@ func _screenshots(dev: String, size: Vector2i) -> void:
 	await _wait(0.8)
 	await _grab(vp, "res://store/screenshots/%s_%d_themes.png" % [dev, n])
 	main.theme_picker.close()
+	vp.queue_free()
+	await _wait(0.3)
+
+
+## App Store Connect ▸ In-App Purchase ▸ Review Information: what the
+## reviewer sees before buying (the Premium screen, iPhone 6.9").
+func _iap_review() -> void:
+	var vp := _vp(DEVICES.iphone69, 720.0)
+	main = load("res://main.tscn").instantiate()
+	main.auto_pause = false
+	vp.add_child(main)
+	main.toast.visible = false
+	SaveData.set_flag("hint_fidget_done")
+	await _wait(1.0)
+	main.open_premium("menu")
+	await _wait(1.0)
+	await _grab(vp, "res://store/iap/premium_review_1320x2868.png")
 	vp.queue_free()
 	await _wait(0.3)
 

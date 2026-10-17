@@ -101,6 +101,11 @@ func show_rewarded(placement: String) -> void:
 		return
 	var earned := [false]
 	ad.full_screen_content_callback.on_ad_dismissed_full_screen_content = func() -> void:
+		# Reward and dismiss both arrive deferred from the native side; give a
+		# reward that lands just after the dismiss a moment so it isn't lost.
+		var until := Time.get_ticks_msec() + 500
+		while not earned[0] and Time.get_ticks_msec() < until:
+			await Engine.get_main_loop().process_frame
 		rewarded_finished.emit(placement, earned[0])
 		ad.destroy()
 		_load_rewarded()

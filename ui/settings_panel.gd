@@ -27,7 +27,7 @@ func _on_open() -> void:
 	_pack_ids.clear()
 	var names := []
 	for p: Dictionary in Sfx.packs():
-		if ThemeManager.is_unlock_met(str(p.get("unlock", "free")), str(p.get("unlock_ref", ""))):
+		if ThemeManager.item_available("sound", p):
 			_pack_ids.append(p.id)
 			names.append(p.name)
 	var sel := maxi(_pack_ids.find(Sfx.pack_id), 0)

@@ -41,7 +41,7 @@ func _ready() -> void:
 	# An expired 24 h trial (or a refunded pack) falls back to the default.
 	apply(saved if t and is_available(t) else "neon", false)
 	var d := str(SaveData.get_setting("design"))
-	apply_design(d if get_design(d).size() > 0 else "round", false)
+	apply_design(d if get_design(d).size() > 0 and item_available("design", get_design(d)) else "round", false)
 
 
 func get_theme(id: String) -> ThemeData:
@@ -85,7 +85,7 @@ func is_available(t: ThemeData) -> bool:
 		"achievement":
 			return Achievements.is_unlocked(t.unlock_ref)
 		"premium":
-			return Platform.is_entitled("premium_unlock") or _trial_active(t.id)
+			return Platform.is_entitled("premium_unlock") or trial_active(trial_key("theme", t.id))
 		"event":
 			# Seasonal: free while its event runs, forever once the event is cleared.
 			return SaveData.is_unlocked("themes", t.id) or Events.is_active(t.unlock_ref)
@@ -95,7 +95,7 @@ func is_available(t: ThemeData) -> bool:
 ## Short, human status for pickers.
 func status_text(t: ThemeData) -> String:
 	if is_available(t):
-		return "TRIAL" if t.unlock == "premium" and _trial_active(t.id) and not Platform.is_entitled("premium_unlock") else ""
+		return "TRIAL" if t.unlock == "premium" and trial_active(trial_key("theme", t.id)) and not Platform.is_entitled("premium_unlock") else ""
 	match t.unlock:
 		"achievement":
 			for d: Dictionary in Achievements.defs:
@@ -109,9 +109,22 @@ func status_text(t: ThemeData) -> String:
 	return ""
 
 
-## Rewarded "try for 24 h" (US-32): unix expiry per theme id.
-func _trial_active(id: String) -> bool:
-	return int(SaveData.section("unlocks").trials.get(id, 0)) > int(Time.get_unix_time_from_system())
+## Rewarded "try for 24 h" (US-32): unix expiry per item in unlocks.trials.
+## Themes use their bare id (older saves); bubble styles / sound packs "kind:id".
+static func trial_key(kind: String, id: String) -> String:
+	return id if kind == "theme" else "%s:%s" % [kind, id]
+
+
+func trial_active(key: String) -> bool:
+	return int(SaveData.section("unlocks").trials.get(key, 0)) > int(Time.get_unix_time_from_system())
+
+
+## Bubble style / sound pack: its unlock rule is met, or a 24 h trial runs.
+func item_available(kind: String, d: Dictionary) -> bool:
+	var u := str(d.get("unlock", "free"))
+	if is_unlock_met(u, str(d.get("unlock_ref", ""))):
+		return true
+	return u == "premium" and trial_active(trial_key(kind, str(d.get("id", ""))))
 
 
 # --- Bubble designs (US-25) ---------------------------------------------------------

@@ -8,6 +8,11 @@ const PRODUCT := "premium_unlock"
 var _buy: Button
 var _msg: Label
 var _context := ""
+## Locked Stage level the panel was opened for (0 = none): offers one rewarded run.
+var _trial_level := 0
+
+## Rewarded "play this level once" (US-32).
+signal level_trial_requested(level_id: int)
 
 
 func _init() -> void:
@@ -21,8 +26,10 @@ func _build() -> void:
 
 
 ## `context` = why it opened (record / level12 / locked_item / menu) — picks the headline.
-func open_for(context: String) -> void:
+## `level_id` > 0: a locked Stage level that may be played once after a video.
+func open_for(context: String, level_id := 0) -> void:
 	_context = context
+	_trial_level = level_id
 	open()
 
 
@@ -59,6 +66,9 @@ func _on_open() -> void:
 		_buy.disabled = price == ""  # never sell without the store's real price
 	_msg = UiStyle.label("" if price != "" or owned else "Connecting to the App Store…", 22, UiStyle.DIM_TEXT)
 	body.add_child(_msg)
+	if not owned and _trial_level > 0 and Platform.can_show_rewarded("level_trial"):
+		var lvl := _trial_level
+		add_button("▶ PLAY LEVEL %d ONCE" % lvl, UiStyle.OK, func() -> void: level_trial_requested.emit(lvl))
 	add_button("RESTORE PURCHASES", Color(1, 1, 1, 0.7), _on_restore)
 
 

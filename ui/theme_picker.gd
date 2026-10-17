@@ -10,7 +10,7 @@ extends Control
 signal locked_tapped(kind: String, id: String, unlock: String, unlock_ref: String)
 signal closed
 ## Rewarded 24 h trial of a premium theme (US-32); main shows the ad.
-signal trial_requested(theme_id: String)
+signal trial_requested(kind: String, id: String)
 
 const TABS := ["theme", "design", "sound"]
 const TAB_NAMES := {"theme": "THEMES", "design": "BUBBLES", "sound": "SOUNDS"}
@@ -133,19 +133,20 @@ func _items() -> Array:
 					"available": ThemeManager.is_available(t), "status": ThemeManager.status_text(t), "color": t.ui_accent})
 		"design":
 			for d: Dictionary in ThemeManager.designs:
-				out.append(_gated(d, UiStyle.CYAN))
+				out.append(_gated("design", d, UiStyle.CYAN))
 		"sound":
 			for p: Dictionary in Sfx.packs():
-				out.append(_gated(p, UiStyle.GOLD))
+				out.append(_gated("sound", p, UiStyle.GOLD))
 	return out
 
 
-func _gated(d: Dictionary, color: Color) -> Dictionary:
+func _gated(kind: String, d: Dictionary, color: Color) -> Dictionary:
 	var u := str(d.get("unlock", "free"))
 	var r := str(d.get("unlock_ref", ""))
-	var ok := ThemeManager.is_unlock_met(u, r)
+	var ok := ThemeManager.item_available(kind, d)
+	var on_trial := ok and not ThemeManager.is_unlock_met(u, r)
 	return {"id": d.id, "name": d.name, "unlock": u, "ref": r, "shape": int(d.get("shape", 0)),
-		"available": ok, "status": "" if ok else ThemeManager.unlock_text(u, r), "color": color}
+		"available": ok, "status": ("TRIAL" if on_trial else "") if ok else ThemeManager.unlock_text(u, r), "color": color}
 
 
 func _current_id() -> String:
@@ -233,8 +234,8 @@ func _select(it: Dictionary, sound := true) -> void:
 		_status.text = status if status.begins_with("Unlock") else "%s — preview" % status
 	_use.text = "USE" if ok else ("GET PREMIUM" if it.unlock == "premium" else "LOCKED")
 	_use.disabled = not ok and it.unlock == "achievement"
-	# Rewarded "theme_trial" (US-32): only for locked premium themes, only when an ad is there.
-	_trial.visible = tab == "theme" and not ok and it.unlock == "premium" and Platform.can_show_rewarded("theme_trial")
+	# Rewarded "style_trial" (US-32): locked premium theme / bubble style / sound pack, only when an ad is there.
+	_trial.visible = not ok and it.unlock == "premium" and Platform.can_show_rewarded("style_trial")
 	_refit()
 	if sound and tab != "sound":
 		Sfx.play_tick()
@@ -248,7 +249,14 @@ func _refit() -> void:
 
 func _on_trial() -> void:
 	if not _selected.is_empty():
-		trial_requested.emit(str(_selected.id))
+		trial_requested.emit(tab, str(_selected.id))
+
+
+## After a rewarded trial: the selected item is available now — use it.
+func use_selected() -> void:
+	if not _selected.is_empty():
+		_commit(_selected)
+	close()
 
 
 

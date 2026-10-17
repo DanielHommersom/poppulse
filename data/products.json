@@ -21,7 +21,7 @@
     }
   ],
   "revenuecat": {
-    "ios_api_key": "",
+    "ios_api_key": "appl_BefLGKjMcwaOrbYdCQzVKHrUIRt",
     "android_api_key": "",
     "_note": "Public SDK keys from RevenueCat ▸ Project ▸ API keys (appl_… / goog_…). Entitlement id per product: rc_entitlement."
   }

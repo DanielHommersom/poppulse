@@ -39,3 +39,5 @@ Godot heeft geen ingebouwde share sheet; gebruik een bestaande iOS share-plugin 
 - **Open:** de share sheet zelf is nog niet op een toestel getest (plugin moet nog gecompileerd worden, zie `ios/plugins/README.md`).
 
 - 8 oktober 2026: PopPulseNative gebouwd (`tools/build_poppulse_native.sh`) en aangezet in beide iOS-presets; export slaagt en linkt. Wacht nog op test op een toestel.
+
+- 12 oktober 2026: getest op iPhone door product owner — akkoord.

@@ -32,3 +32,5 @@ Als speler wil ik dat de game altijd vloeiend draait en mijn batterij niet leegt
 - Batterij: in IDLE / RESULTS / PAUSED zakt `Engine.max_fps` na 6 s zonder aanraking naar 30; de eerste touch zet hem terug op 0 (= display-rate, 120 Hz op ProMotion). Tijdens countdown/spel altijd volle framerate.
 - Geheugen: scenario `s_perf` speelt 20 Score-runs met een combo-bot (4× versneld) en meet via `Performance`-monitors: nodes 388 → 388, objecten 2823 → 2823, orphan-nodes 0, statisch geheugen 126,91 → 126,98 MB (ruis). Op de Mac min. 117 fps tijdens spel.
 - **Open:** 120 fps op een ProMotion-iPhone en 60 fps op een iPhone 11 bij 50+ combo's meten op echte toestellen (Xcode ▸ Debug Navigator of de FPS-teller in de debug-overlay).
+
+- 12 oktober 2026: getest op iPhone door product owner — akkoord.

@@ -10,7 +10,7 @@ Werking in de game:
 ## Bijwerken zonder app-update
 
 1. Pas de JSON aan en **verhoog `version`**.
-2. Kopieer het bestand naar `docs/events.json` en publiceer: dat is `remote_url` (`https://danielhommersom.github.io/poppulse/events.json`, GitHub Pages).
+2. Kopieer het bestand naar `docs/events.json` én naar `danielhommersom.github.io/poppulse/events.json` (repo `DanielHommersom/danielhommersom.github.io`) en push die repo: dat is `remote_url` (`https://danielhommersom.github.io/poppulse/events.json`, GitHub Pages).
 3. Bij de volgende start haalt de game hem op, valideert hem (modes bestaan, verplichte velden aanwezig), cachet hem in `user://events_cache.json` en gebruikt hem alleen als de versie nieuwer is. Bij een fout of offline: cache of ingebouwde data.
 
 Let op: een **nieuw thema** kan niet remote worden toegevoegd (thema's zitten in de app); een remote event gebruikt dus een bestaand thema of `"theme": ""`.

@@ -23,13 +23,16 @@
   },
   "interstitial": {
     "min_sessions": 2,
+    "first_session_after_runs": 3,
     "runs_between": 3,
-    "min_seconds_between": 120,
-    "skip_after_record": true,
+    "min_seconds_between": 90,
+    "skip_after_record": false,
+    "skip_first_run_per_mode": true,
     "skip_after_rewarded": true,
     "placements": [
       "results_to_menu",
       "results_to_next"
     ]
-  }
+  },
+  "session_gap_seconds": 1800
 }

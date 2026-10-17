@@ -40,3 +40,5 @@ Als gratis speler wil ik zelf kiezen om een video te kijken voor een voordeel, z
 - **Keuze vastgelegd:** een record dat met 'continue' is behaald telt lokaal wel als persoonlijk record maar wordt gemarkeerd ('NEW BEST! (continued)', `best_continued` in de save) en wordt **nooit** naar een leaderboard gestuurd.
 - Premium-spelers krijgen deze voordelen zonder ad.
 - Getest met de mock-ads (scenario `s_rewarded`).
+
+- 17 oktober 2026 (build 2): extra rewarded-placements `level_trial` (vergrendeld level 1× spelen) en `style_trial` (ook bubbles + geluiden 24 uur); zie docs/ads.md.

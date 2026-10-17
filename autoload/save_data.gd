@@ -24,6 +24,12 @@ const SETTING_DEFAULTS := {
 
 var store: SaveStore
 var _dirty := false
+## Finished games in the current session (ad rules, US-33).
+var session_runs := 0
+## A comeback after this long in the background starts a new session (iOS keeps
+## apps alive for hours, so cold starts alone undercount sessions).
+var session_gap_s := 1800
+var _backgrounded_at := 0
 
 
 ## Loaded in _init (not _ready) so other autoloads can read the save no matter
@@ -46,6 +52,25 @@ func _notification(what: int) -> void:
 	if what in [NOTIFICATION_WM_CLOSE_REQUEST, NOTIFICATION_APPLICATION_PAUSED, NOTIFICATION_APPLICATION_FOCUS_OUT, NOTIFICATION_PREDELETE]:
 		if _dirty:
 			save_now()
+	if what == NOTIFICATION_APPLICATION_PAUSED:
+		went_background(int(Time.get_unix_time_from_system()))
+	elif what == NOTIFICATION_APPLICATION_RESUMED:
+		came_foreground(int(Time.get_unix_time_from_system()))
+
+
+func went_background(now: int) -> void:
+	if _backgrounded_at == 0:
+		_backgrounded_at = now
+
+
+## Back after `session_gap_s` or more counts as a new session.
+func came_foreground(now: int) -> void:
+	if _backgrounded_at > 0 and now - _backgrounded_at >= session_gap_s:
+		var stats: Dictionary = store.data.stats
+		stats.sessions = int(stats.sessions) + 1
+		session_runs = 0
+		mark_dirty()
+	_backgrounded_at = 0
 
 
 ## Batches writes (at most one atomic save per 0.5 s); forced on pause / quit.

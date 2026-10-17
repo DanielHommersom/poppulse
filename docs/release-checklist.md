@@ -1,24 +1,27 @@
 # Release-checklist (App Store)
 
 ## Juridisch & privacy
-- [ ] `docs/index.html` (privacy policy) online en `AppInfo.PRIVACY_URL` + ASC ▸ Privacy Policy URL wijzen ernaar.
+- [x] Pagina's uit `docs/` (privacy `index.html`, `terms/`, `support/`, `events.json`) gekopieerd naar repo `danielhommersom.github.io` ▸ `poppulse/` en gepusht; `https://danielhommersom.github.io/poppulse/` opent. ASC ▸ Privacy Policy URL wijst ernaar.
 - [ ] Privacy-URL ingevuld in App Store Connect ▸ App Privacy ▸ Privacy Policy URL. Settings ▸ Privacy ▸ PRIVACY POLICY opent dezelfde URL.
-- [ ] `docs/terms/index.html` online op `AppInfo.TERMS_URL` (Settings ▸ Terms of Use); `docs/support/index.html` online als ASC ▸ Support URL.
-- [ ] `AppInfo.APP_STORE_ID` invullen zodra de app in App Store Connect bestaat: dan bevatten "Tell a friend" en gedeelde resultaten de App Store-link (tot die tijd de website-link).
+- [ ] Terms op `AppInfo.TERMS_URL` (Settings ▸ Terms of Use) en support (`…/poppulse/support/`) als ASC ▸ Support URL bereikbaar. Geen GitHub Pages aanzetten op de (privé) projectrepo `poppulse`.
+- [x] `AppInfo.APP_STORE_ID` (6822425109) invullen zodra de app in App Store Connect bestaat: dan bevatten "Tell a friend" en gedeelde resultaten de App Store-link (tot die tijd de website-link).
 - [ ] Merkcheck van de naam (zie `docs/store-assets.md`).
 
 ## App Privacy-labels (ASC ▸ App Privacy)
 Moet overeenkomen met de daadwerkelijk ingebouwde SDK's (AdMob + UMP, RevenueCat). Voortgang, records en achievements blijven op het toestel en tellen niet als "verzameld":
 
-| Datatype (Apple) | Verzameld | Gekoppeld aan identiteit | Tracking | Doeleinden |
+| Datatype (Apple) | Bron | Doeleinden | Gekoppeld | Tracking |
 |---|---|---|---|---|
-| Identifiers ▸ Device ID | ja (AdMob, alleen na ATT-toestemming) | nee | **ja** | Advertenties van derden |
-| Usage Data ▸ Advertising Data | ja (AdMob) | nee | **ja** | Advertenties van derden |
-| Usage Data ▸ Product Interaction | ja (AdMob) | nee | nee | Advertenties van derden |
-| Purchases ▸ Purchase History | ja (RevenueCat: transactie + anoniem app-user-id) | nee | nee | App-functionaliteit |
-| Diagnostics ▸ Crash / Performance | nee (geen crash-SDK) | – | – | – |
-| Contact info, Locatie, Contacten, Foto's | **nee** | – | – | – |
-| Identifiers ▸ User ID | twijfelgeval: RevenueCat maakt een willekeurig anoniem app-user-id. Check RevenueCat's gids *Apple App Privacy*; bij twijfel opgeven als: niet gekoppeld aan identiteit, geen tracking, App-functionaliteit | nee | nee | App-functionaliteit |
+| Location ▸ Coarse Location | AdMob (IP) | Third-Party Advertising, Analytics | nee | **ja** |
+| Identifiers ▸ Device ID | AdMob (IDFA na ATT) | Third-Party Advertising, Analytics | nee | **ja** |
+| Purchases ▸ Purchase History | RevenueCat | App Functionality, Analytics | nee | nee |
+| Usage Data ▸ Product Interaction | AdMob | Third-Party Advertising, Analytics | nee | **ja** |
+| Usage Data ▸ Advertising Data | AdMob | Third-Party Advertising, Analytics | nee | **ja** |
+| Diagnostics ▸ Crash Data | AdMob | App Functionality, Analytics | nee | nee |
+| Diagnostics ▸ Performance Data | AdMob ("user-associated" volgens Google) | Analytics, Third-Party Advertising | **ja** | nee |
+| Contact info, precieze locatie, User ID, contacten, foto's, user content | – | **niet verzameld** | – | – |
+
+Bronnen: Google *Data disclosure* (developers.google.com/admob/ios/privacy/data-disclosure) en RevenueCat *Apple App Privacy* (anonieme app-user-id's → alleen Purchases, niet gekoppeld). Leeftijd: **13+** via *Override to Higher Age Rating* (AdMob max. inhoud T).
 
 - [ ] Labels ingevuld zoals hierboven; bij een nieuwe SDK deze tabel en `ios/PrivacyInfo.xcprivacy` bijwerken.
 
@@ -28,7 +31,7 @@ Moet overeenkomen met de daadwerkelijk ingebouwde SDK's (AdMob + UMP, RevenueCat
 - [ ] Xcode ▸ Product ▸ Archive ▸ *Generate Privacy Report* doorlopen: geen waarschuwingen.
 
 ## Leeftijd & categorie
-- [ ] Leeftijdsclassificatie-vragenlijst: geen geweld/gokken/etc.; *Unrestricted Web Access* nee; *Contests* nee → **12+** kiezen (advertenties van derden kunnen niet-kindgericht zijn).
+- [ ] Leeftijdsclassificatie-vragenlijst: geen geweld/gokken/etc.; *Unrestricted Web Access* nee; *Contests* nee → daarna *Override to Higher Age Rating* ▸ **13+** (AdMob-advertenties tot T, gepersonaliseerde ads + ATT).
 - [ ] **Niet** in de Kids-categorie indienen; primaire categorie Games ▸ Casual, secundair Games ▸ Puzzle.
 - [ ] AdMob: *tag for child-directed treatment* uit; maximum ad content rating **T** (teen).
 

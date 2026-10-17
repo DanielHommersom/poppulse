@@ -34,3 +34,23 @@ Premium → de SDK wordt nooit gestart en er worden nooit ads geladen of getoond
 ## Instelling
 
 Settings ▸ PRIVACY & LEGAL ▸ **CHANGE AD CONSENT** opent Google's privacy-opties. De knop staat er alleen als: geen Premium, de consent-flow heeft gedraaid (na het 1e potje) én UMP zegt dat privacy-opties verplicht zijn (`privacy_options_requirement_status == REQUIRED`: EER/VK/CH, gereguleerde US-staten). Elders zou Google's formulier niet verschijnen. Na sluiten wordt de nieuwe keuze direct toegepast (`npa` voor volgende advertenties; de SDK leest ook de nieuwe TCF-string).
+
+## Frequentie (build 2, `data/ads.json`)
+
+**Interstitials** (alleen bij resultaten ▸ menu / volgend potje, `core/ad_rules.gd`):
+- eerste sessie pas vanaf het **3e afgeronde potje** (`first_session_after_runs`), daarna vrij volgens de regels hieronder;
+- nieuwe sessie = koude start **of terugkomen na ≥ 30 min** op de achtergrond (`session_gap_seconds`);
+- minimaal **3 potjes** en **90 s** tussen twee interstitials;
+- niet na het **allereerste potje van een modus** (`skip_first_run_per_mode`); records blokkeren niet meer;
+- niet direct na een rewarded video; nooit met Premium, nooit tijdens spelen/pauze/opstarten.
+
+**Rewarded** (altijd vrijwillig, knop alleen als er een video klaarstaat):
+| Placement | Waar | Beloning |
+|---|---|---|
+| `continue` | resultaat (normaal potje) | doorspelen |
+| `daily_retry` | resultaat (Daily) | extra officiële poging |
+| `style_trial` | Style ▸ premium thema / bubble / geluid | 24 uur gebruiken (`unlocks.trials`, sleutel `id` of `kind:id`) |
+| `level_trial` | Premium-scherm bij een vergrendeld level (13–30, alleen als het via voortgang bereikbaar is) | dat level 1× spelen; RETRY/NEXT daarna gaan weer via het slot |
+
+Verlopen trials vallen bij de volgende start terug op de standaard (thema Neon, bubble Round, geluid Classic).
+

@@ -39,5 +39,7 @@ func restore() -> void:
 func price(product_id: String) -> String:
 	for p: Dictionary in products:
 		if p.id == product_id:
-			return str(p.get("mock_price", "")) + " (mock)"
+			# --store-shot: clean price for App Store screenshots (tools/store_assets).
+			var tag := "" if "--store-shot" in OS.get_cmdline_user_args() else " (mock)"
+			return str(p.get("mock_price", "")) + tag
 	return ""

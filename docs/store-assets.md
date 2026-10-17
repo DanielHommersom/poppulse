@@ -26,4 +26,6 @@ swift tools/make_preview.swift store/preview/frames store/preview/app_preview_88
 
 ## Naam
 
+**App Store-naam: "Pop Pulse: Bubble Reflex"** (App Store Connect, 13 oktober 2026). "Pop Pulse" alleen was al gereserveerd in de App Store. Op het beginscherm (`config/name`) en in de game blijft het "Pop Pulse"; Apple staat een kortere naam op het beginscherm toe.
+
 De game heet in de build **Pop Pulse** (werktitel, `core/app_info.gd`). 'Pop It' is de merknaam van het fysieke speelgoed en wordt nergens meer getoond; interne id's (`com.digitaldiamonds.poppulse`, user-map) zijn onzichtbaar voor spelers. **Doe vóór launch een merkcheck** (EUIPO / USPTO / App Store-zoekopdracht) en pas zo nodig `AppInfo`, `config/name` in `project.godot` en de producttitels aan.

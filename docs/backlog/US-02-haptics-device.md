@@ -34,3 +34,5 @@ Als speler wil ik bij iedere pop een korte, strakke tik voelen, zodat het spel a
 - **Open:** plugin is nog niet gecompileerd en het verschil LIGHT/MEDIUM/HEAVY/ERROR is niet op een toestel gevoeld.
 
 - 8 oktober 2026: PopPulseNative gebouwd (`tools/build_poppulse_native.sh`) en aangezet in beide iOS-presets; export slaagt en linkt. Wacht nog op test op een toestel.
+
+- 12 oktober 2026: getest op iPhone door product owner — akkoord.

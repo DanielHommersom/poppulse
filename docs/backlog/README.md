@@ -42,7 +42,7 @@ en zet de status in README.md op ✅.
 | Status | ID | Story | Afhankelijk van |
 |---|---|---|---|
 | 🔄 | [US-01](US-01-ios-testbuild.md) | iOS test-build via TestFlight | — |
-| 🔄 | [US-02](US-02-haptics-device.md) | Haptics op iOS verifiëren en verfijnen | US-01 |
+| ✅ | [US-02](US-02-haptics-device.md) | Haptics op iOS verifiëren en verfijnen | US-01 |
 | ✅ | [US-03](US-03-settings.md) | Instellingen: geluid, muziek en haptics | — |
 | ✅ | [US-04](US-04-pause-interrupt.md) | Pauze en app-onderbreking | — |
 | ✅ | [US-05](US-05-tuning-overlay.md) | Debug tuning-overlay voor game feel | — |
@@ -65,7 +65,7 @@ en zet de status in README.md op ✅.
 | ✅ | [US-12](US-12-memory-mode.md) | Memory Mode | US-06, US-09 |
 | ✅ | [US-13](US-13-stage-framework.md) | Stage Mode: level-framework | US-06, US-08, US-09 |
 | ✅ | [US-14](US-14-stage-select.md) | Stage Mode: level-select scherm | US-13 |
-| 🔄 | [US-15](US-15-stage-levels-30.md) | 30 levels ontwerpen | US-13, US-14 |
+| ✅ | [US-15](US-15-stage-levels-30.md) | 30 levels ontwerpen | US-13, US-14 |
 | ✅ | [US-16](US-16-first-run.md) | Eerste keer spelen zonder tutorial | US-07, US-08 |
 
 ### Fase 4 — Retentie
@@ -75,7 +75,7 @@ en zet de status in README.md op ✅.
 | ✅ | [US-17](US-17-daily-challenge.md) | Daily Challenge | US-07, US-08 |
 | ✅ | [US-18](US-18-streak.md) | Dagelijkse streak | US-17 |
 | ✅ | [US-19](US-19-stats-screen.md) | Records- en statistiekenscherm | US-08, US-11 |
-| 🔄 | [US-20](US-20-share-card.md) | Deelbare resultaatkaart | US-01 |
+| ✅ | [US-20](US-20-share-card.md) | Deelbare resultaatkaart | US-01 |
 | ➖ | [US-21](US-21-game-center-leaderboards.md) | Game Center login en leaderboards | US-06, US-08 |
 | ✅ | [US-22](US-22-achievements.md) | Achievements | US-21 |
 
@@ -105,7 +105,7 @@ en zet de status in README.md op ✅.
 
 | Status | ID | Story | Afhankelijk van |
 |---|---|---|---|
-| 🔄 | [US-35](US-35-performance.md) | Performance- en batterijpass | US-01 |
+| ✅ | [US-35](US-35-performance.md) | Performance- en batterijpass | US-01 |
 | ✅ | [US-36](US-36-accessibility.md) | Toegankelijkheid | US-23 |
 | ✅ | [US-37](US-37-store-assets.md) | App-icoon, launch screen en App Store-assets | US-24 |
 | 🔄 | [US-38](US-38-privacy-compliance.md) | Privacy, leeftijdsclassificatie en App Store-compliance | US-31, US-34 |

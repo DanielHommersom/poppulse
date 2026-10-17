@@ -8,14 +8,15 @@ const NAME := "Pop Pulse"
 const TITLE := "POP PULSE"
 const HASHTAG := "#PopPulse"
 
-## Public pages: docs/index.html (privacy), docs/terms/, docs/support/.
+## Public pages: source in docs/ (index.html = privacy, terms/, support/), published
+## from the repo danielhommersom.github.io, folder poppulse/ (copy after edits).
 const WEBSITE_URL := "https://danielhommersom.github.io/poppulse/"
 const PRIVACY_URL := "https://danielhommersom.github.io/poppulse/"
 const TERMS_URL := "https://danielhommersom.github.io/poppulse/terms/"
 const SUPPORT_URL := "https://danielhommersom.github.io/poppulse/support/"
 ## Numeric App Store id (App Store Connect ▸ App Information ▸ Apple ID).
-## Empty until the app exists; until then share links point to the website.
-const APP_STORE_ID := ""
+## Share links (Tell a friend, result card) point to the App Store page.
+const APP_STORE_ID := "6822425109"
 const ANDROID_PACKAGE := "com.digitaldiamonds.poppulse"
 
 

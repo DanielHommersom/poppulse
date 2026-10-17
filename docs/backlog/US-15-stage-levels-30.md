@@ -32,3 +32,5 @@ Als speler wil ik 30 levels met een geleidelijke, afwisselende moeilijkheidscurv
 - Blokken: 1–10 meerdere targets tegelijk / in paren, 11–20 kortere lifetime, 21–30 vaste patronen + 'niet tikken'-bubbles. Levels 5/10/15/20/25/30 zijn pieken; 6/16/26 zijn bewust rustiger.
 - Tijdslimieten en sterdrempels zijn afgeleid uit de gemeten bot-tijden (zie `docs/levels.md`). Resultaat laatste run: skilled-bot haalt alles, meestal ★★★; casual-bot haalt 141/150 runs, meestal ★★, en faalt alleen af en toe op pieken.
 - **Open:** 'door de ontwikkelaar gehaald' kan ik niet voor je doen — de bot-runs zijn een onderbouwing, geen vervanging voor zelf spelen op een toestel. Daarna drempels zo nodig bijstellen in de JSON of met de tuning-overlay.
+
+- 12 oktober 2026: getest op iPhone door product owner — akkoord.

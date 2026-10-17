@@ -62,9 +62,10 @@ func _sync_pack() -> void:
 	if bool(SaveData.get_setting("sound_follows_theme")) and ThemeManager.current:
 		var tp := ThemeManager.current.sfx_pack
 		var d := get_pack(tp)
-		if not d.is_empty() and ThemeManager.is_unlock_met(str(d.get("unlock", "free")), str(d.get("unlock_ref", ""))):
+		if not d.is_empty() and ThemeManager.item_available("sound", d):
 			id = tp
-	_load_pack(id if not get_pack(id).is_empty() else "classic")
+	var chosen := get_pack(id)
+	_load_pack(id if not chosen.is_empty() and ThemeManager.item_available("sound", chosen) else "classic")
 
 
 ## Explicit choice from the style sheet / settings: also stops following the theme.

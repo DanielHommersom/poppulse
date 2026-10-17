@@ -20,8 +20,6 @@ const HAPTIC_FALLBACK := {
 	Haptic.ERROR: [45, 0.8],
 }
 
-## Filled in once the app is live; appended to share texts when not empty.
-const APP_STORE_URL := ""
 ## Public privacy policy (US-38); see AppInfo for all public URLs.
 const PRIVACY_URL := AppInfo.PRIVACY_URL
 const SHARE_DIR := "user://share"
@@ -98,6 +96,7 @@ func _setup_monetization() -> void:
 	store.failed.connect(func(pid: String, reason: String) -> void: purchase_failed.emit(pid, reason))
 	store.restore_finished.connect(func(n: int) -> void: restore_completed.emit(n))
 	ads = _make_ads()
+	SaveData.session_gap_s = int(GameMode.load_config("res://data/ads.json").get("session_gap_seconds", 1800))
 	_resume_ads.call_deferred()
 
 
@@ -320,7 +319,7 @@ func share_image(image: Image, text: String, reveal := true) -> String:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(SHARE_DIR))
 	var path := ProjectSettings.globalize_path(SHARE_DIR + "/poppulse_result.png")
 	image.save_png(path)
-	var full := text if APP_STORE_URL == "" else "%s %s" % [text, APP_STORE_URL]
+	var full := "%s %s" % [text, AppInfo.store_url()]
 	if _native and _native.has_method("share_image"):
 		_native.share_image(path, full)
 	else:
