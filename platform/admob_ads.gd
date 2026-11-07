@@ -12,8 +12,13 @@ extends AdsBackend
 const SINGLETON := "PoingGodotAdMob"
 
 var _units := {}
+## Release builds: placement → its own rewarded ad unit (data/ads.json
+## "rewarded.placements"), so AdMob reports per button. Empty / missing → the
+## shared rewarded unit. Debug builds always use Google's test unit.
+var _placement_units := {}
 var _personalized := false
-var _rewarded: RewardedAd
+## Loaded rewarded ad per ad unit id.
+var _rewarded := {}
 var _interstitial: InterstitialAd
 var _initialized := false
 ## Loader objects must stay referenced while they load.
@@ -24,11 +29,30 @@ static func available() -> bool:
 	return Engine.has_singleton(SINGLETON)
 
 
-func _init(cfg: Dictionary) -> void:
+func _init(cfg: Dictionary, release := not OS.is_debug_build()) -> void:
 	var os_key := "android" if OS.get_name() == "Android" else "ios"
-	var which := "test" if OS.is_debug_build() else "release"
+	var which := "release" if release else "test"
 	for kind in ["rewarded", "interstitial"]:
 		_units[kind] = str(cfg.get("units", {}).get(os_key, {}).get(kind, {}).get(which, ""))
+	if which == "release":
+		var per: Dictionary = cfg.get("units", {}).get(os_key, {}).get("rewarded", {}).get("placements", {})
+		for p in per:
+			if str(per[p]).begins_with("ca-app-pub-"):
+				_placement_units[p] = str(per[p])
+
+
+## Ad unit a rewarded placement uses (its own one, else the shared unit).
+func unit_for(placement: String) -> String:
+	return str(_placement_units.get(placement, _units.rewarded))
+
+
+## Every distinct rewarded unit, each preloaded once.
+func rewarded_units() -> Array:
+	var out := [str(_units.rewarded)]
+	for u in _placement_units.values():
+		if not u in out:
+			out.append(u)
+	return out
 
 
 func initialize(personalized: bool) -> void:
@@ -38,7 +62,8 @@ func initialize(personalized: bool) -> void:
 	_initialized = true
 	var listener := OnInitializationCompleteListener.new()
 	listener.on_initialization_complete = func(_status: InitializationStatus) -> void:
-		_load_rewarded()
+		for unit in rewarded_units():
+			_load_rewarded(unit)
 		_load_interstitial()
 	MobileAds.initialize(listener)
 
@@ -54,17 +79,17 @@ func _request() -> AdRequest:
 	return req
 
 
-func _load_rewarded() -> void:
+func _load_rewarded(unit: String) -> void:
 	var loader := RewardedAdLoader.new()
 	_loaders.append(loader)
 	var cb := RewardedAdLoadCallback.new()
 	cb.on_ad_loaded = func(ad: RewardedAd) -> void:
-		_rewarded = ad
+		_rewarded[unit] = ad
 		_loaders.erase(loader)
 	cb.on_ad_failed_to_load = func(_e: LoadAdError) -> void:
 		_loaders.erase(loader)
-		_retry(_load_rewarded)
-	loader.load(_units.rewarded, _request(), cb)
+		_retry(_load_rewarded.bind(unit))
+	loader.load(unit, _request(), cb)
 
 
 func _load_interstitial() -> void:
@@ -85,8 +110,8 @@ func _retry(fn: Callable) -> void:
 	fn.call()
 
 
-func rewarded_ready(_placement: String) -> bool:
-	return _rewarded != null
+func rewarded_ready(placement: String) -> bool:
+	return _rewarded.get(unit_for(placement)) != null
 
 
 func interstitial_ready(_placement: String) -> bool:
@@ -94,8 +119,9 @@ func interstitial_ready(_placement: String) -> bool:
 
 
 func show_rewarded(placement: String) -> void:
-	var ad := _rewarded
-	_rewarded = null
+	var unit := unit_for(placement)
+	var ad: RewardedAd = _rewarded.get(unit)
+	_rewarded.erase(unit)
 	if ad == null:
 		rewarded_finished.emit(placement, false)
 		return
@@ -108,11 +134,11 @@ func show_rewarded(placement: String) -> void:
 			await Engine.get_main_loop().process_frame
 		rewarded_finished.emit(placement, earned[0])
 		ad.destroy()
-		_load_rewarded()
+		_load_rewarded(unit)
 	ad.full_screen_content_callback.on_ad_failed_to_show_full_screen_content = func(_e: AdError) -> void:
 		rewarded_finished.emit(placement, false)
 		ad.destroy()
-		_load_rewarded()
+		_load_rewarded(unit)
 	var listener := OnUserEarnedRewardListener.new()
 	listener.on_user_earned_reward = func(_item: RewardedItem) -> void: earned[0] = true
 	ad.show(listener)

@@ -96,8 +96,24 @@ func _setup_monetization() -> void:
 	store.failed.connect(func(pid: String, reason: String) -> void: purchase_failed.emit(pid, reason))
 	store.restore_finished.connect(func(n: int) -> void: restore_completed.emit(n))
 	ads = _make_ads()
-	SaveData.session_gap_s = int(GameMode.load_config("res://data/ads.json").get("session_gap_seconds", 1800))
+	SaveData.session_gap_s = int(AdConfig.load_rules().session_gap_seconds)
 	_resume_ads.call_deferred()
+	if not "--test-save" in OS.get_cmdline_user_args():
+		_fetch_ad_config.call_deferred()
+
+
+## Remote interstitial rules (core/ad_config.gd): fetched once per launch in the
+## background; a failure simply keeps the cached / built-in rules.
+func _fetch_ad_config() -> void:
+	var http := HTTPRequest.new()
+	http.timeout = 10.0
+	add_child(http)
+	http.request_completed.connect(func(result: int, code: int, _h: PackedStringArray, body: PackedByteArray) -> void:
+		http.queue_free()
+		if result == HTTPRequest.RESULT_SUCCESS and code == 200 and AdConfig.apply_remote(body.get_string_from_utf8()):
+			SaveData.session_gap_s = int(AdConfig.load_rules().session_gap_seconds))
+	if http.request(AdConfig.REMOTE_URL) != OK:
+		http.queue_free()
 
 
 ## RevenueCat on a device (iOS / Android) when its plugin and API key are
@@ -124,8 +140,8 @@ func _make_ads() -> AdsBackend:
 
 
 # --- Consent: UMP → ATT → ads (US-31) ---------------------------------------------
-# Order: (1) Google UMP consent form — shown by Google only in the EEA / UK and
-# only after the player's first finished game; (2) Apple's ATT prompt; (3) the
+# Order: (1) Google UMP consent form — shown by Google only in the EEA / UK,
+# right after the splash on a fresh install; (2) Apple's ATT prompt; (3) the
 # ads SDK starts, personalised only if both said yes. Never for Premium.
 
 signal ads_initialized(personalized: bool)
@@ -144,11 +160,14 @@ func _ads_state() -> Dictionary:
 ## On launch: players who already went through consent get ads right away.
 func _resume_ads() -> void:
 	if bool(_ads_state().consent_done):
-		start_ads_after_first_game()
+		start_ads()
 
 
-## main.gd calls this after every finished run; the flow runs once.
-func start_ads_after_first_game() -> void:
+## Consent → our explainer → Apple ATT → ads, once per launch. On a fresh
+## install main.gd calls it right after the splash screens (as in NeonSolitaire),
+## so the tracking prompt always appears before any ad is requested; on later
+## launches _resume_ads starts the SDK silently with the stored choice.
+func start_ads() -> void:
 	if ads_started or ads_disabled():
 		return
 	ads_started = true

@@ -46,7 +46,7 @@ Bronnen: Google *Data disclosure* (developers.google.com/admob/ios/privacy/data-
 - [ ] Echte AdMob app-id in `GADApplicationIdentifier` en echte unit-id's in `data/ads.json` (`release`).
 - [ ] `NSUserTrackingUsageDescription` aanwezig (preset) en begrijpelijk.
 - [ ] UMP-berichten gepubliceerd in AdMob ▸ Privacy & messaging (GDPR + US states). IDFA explainer **niet** publiceren: wij tonen ATT zelf ná consent.
-- [ ] Getest: EER-toestel → consent-formulier na 1e potje → ATT → ads; weigeren → niet-gepersonaliseerd.
+- [ ] Getest: EER-toestel → consent-formulier direct na de splash → uitleg → ATT → ads; weigeren → niet-gepersonaliseerd.
 
 ## In-app aankopen
 - [ ] Alle producten uit `docs/storekit.md` *Ready to Submit*, met review-screenshot.

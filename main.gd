@@ -178,11 +178,18 @@ func _play_splashes() -> void:
 	var args := OS.get_cmdline_user_args()
 	var skip := ("--test-save" in args or "--no-splash" in args) and not "--force-splash" in args
 	if skip:
-		_announce_event.call_deferred()
+		_after_splash.call_deferred()
 		return
 	var splash := SplashSequence.new()
-	splash.finished.connect(_announce_event)
+	splash.finished.connect(_after_splash)
 	add_child(splash)
+
+
+## Fresh install: ad consent, our explainer and Apple's tracking prompt right
+## after the intro (before any ad loads), then the event toast.
+func _after_splash() -> void:
+	await Platform.start_ads()
+	_announce_event()
 
 
 ## Swaps the active mode: the old one is disconnected and freed, the new one is
@@ -573,7 +580,7 @@ func _leave_results(next: Callable, placement: String) -> void:
 		return
 	_leaving_results = true
 	var st := SaveData.section("ads")
-	var cfg: Dictionary = GameMode.load_config("res://data/ads.json").get("interstitial", {})
+	var cfg := AdConfig.load_rules()  # built-in + remote overrides (core/ad_config.gd)
 	var ctx := {
 		"sessions": int(SaveData.section("stats").sessions),
 		"session_runs": SaveData.session_runs,
@@ -1047,7 +1054,7 @@ func _on_finished(results: Dictionary) -> void:
 			stats["best_single"] = single
 	hud.set_best_text(_best_text())
 	Achievements.on_run_finished(mode.mode_id, results)
-	Platform.start_ads_after_first_game()  # consent → ATT → ads, once, after the first game
+	Platform.start_ads()  # normally already ran after the splash; no-op then
 	var ads_state := SaveData.section("ads")
 	ads_state.runs_since = int(ads_state.get("runs_since", 0)) + 1
 	SaveData.session_runs += 1

@@ -871,3 +871,136 @@ func s_style_trial() -> void:
 	main.theme_picker._on_trial()
 	await wait(3.5)
 	print("design now=", SaveData.get_setting("design"), " picker open=", main.theme_picker.visible)
+
+
+func s_consent_after_splash() -> void:
+	# Fresh install: the consent flow must run right after the (skipped) splash.
+	await wait(1.0)
+	var st := SaveData.section("ads")
+	print("after splash: ads_started=", Platform.ads_started, " consent_done=", st.get("consent_done"), " runs=", SaveData.mode_stats("score").played)
+
+
+## Simulated finger drag that starts on top of a button inside a scroll area.
+## `from` / `delta` in game (canvas) units; converted to window pixels here.
+func _finger_drag(from_canvas: Vector2, delta_canvas: Vector2, steps := 12) -> void:
+	var xf := get_viewport().get_final_transform()
+	var from := xf * from_canvas
+	var delta := xf.basis_xform(delta_canvas)
+	var t := InputEventScreenTouch.new()
+	t.index = 0
+	t.position = from
+	t.pressed = true
+	Input.parse_input_event(t)
+	await get_tree().process_frame
+	for i in steps:
+		var d := InputEventScreenDrag.new()
+		d.index = 0
+		d.position = from + delta * float(i + 1) / steps
+		d.relative = delta / steps
+		Input.parse_input_event(d)
+		await get_tree().process_frame
+	var u := InputEventScreenTouch.new()
+	u.index = 0
+	u.position = from + delta
+	u.pressed = false
+	Input.parse_input_event(u)
+	await wait(0.3)
+
+
+func _first_button_in(c: Node) -> Control:
+	for n in c.find_children("*", "BaseButton", true, false):
+		if (n as Control).is_visible_in_tree():
+			return n
+	return null
+
+
+func s_scroll_drag() -> void:
+	main._open_settings()
+	await wait(0.6)
+	var fired := [0]
+	main.settings.open_requested.connect(func(_t: String) -> void: fired[0] += 1)
+	var sc: ScrollContainer = main.settings.scroll
+	var btn := _first_button_in(main.settings.body)
+	var start := btn.get_global_rect().get_center()
+	print("settings: before=", sc.scroll_vertical, " start on ", btn.get_class(), " text=", (btn as Button).text if btn is Button else "")
+	await _finger_drag(start, Vector2(0, -400))
+	print("settings: after drag on a button=", sc.scroll_vertical, " button fired=", fired[0], " settings still open=", main.settings.visible)
+	main.settings.close()
+	await wait(0.4)
+	main._open_themes()
+	await wait(0.6)
+	var hs: ScrollContainer = main.theme_picker._scroll
+	var chip: Control = main.theme_picker._row.get_child(3)  # a chip mid-screen
+	var sel_before := str(main.theme_picker._selected.get("id", ""))
+	print("style: before=", hs.scroll_horizontal, " selected=", sel_before)
+	await _finger_drag(chip.get_global_rect().get_center(), Vector2(-350, 0))
+	print("style: after drag on a chip=", hs.scroll_horizontal, " selected=", main.theme_picker._selected.get("id", ""))
+
+
+func s_style_scroll_debug() -> void:
+	main._open_themes()
+	await wait(0.6)
+	var hs: ScrollContainer = main.theme_picker._scroll
+	print("scroll size=", hs.size, " row size=", main.theme_picker._row.size, " deadzone=", hs.scroll_deadzone, " hmode=", hs.horizontal_scroll_mode)
+	var chip := _first_button_in(main.theme_picker._row)
+	print("chip filter=", chip.mouse_filter, " rect=", chip.get_global_rect())
+	var p := chip.get_global_rect().get_center()
+	var n: Control = get_viewport().gui_get_hovered_control() if get_viewport().has_method("gui_get_hovered_control") else null
+	for c in [chip, chip.get_parent(), hs, hs.get_parent(), hs.get_parent().get_parent()]:
+		print("  ", c.get_class(), " ", c.name, " filter=", (c as Control).mouse_filter)
+	hs.scroll_horizontal = 200
+	await wait(0.1)
+	print("programmatic scroll -> ", hs.scroll_horizontal)
+
+
+func s_style_tap_debug() -> void:
+	main._open_themes()
+	await wait(0.6)
+	var chip: Control = main.theme_picker._row.get_child(3)
+	var p := chip.get_global_rect().get_center()
+	var m := InputEventMouseMotion.new()
+	m.position = p
+	Input.parse_input_event(m)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var h := get_viewport().gui_get_hovered_control()
+	print("hovered at chip center: ", h.get_class() if h else "none", " ", h.name if h else "", " path=", h.get_path() if h else "")
+	print("chip path=", chip.get_path())
+	await _finger_drag(p, Vector2.ZERO, 1)
+	print("after tap: selected=", main.theme_picker._selected.get("id", ""))
+
+
+func s_coords_debug() -> void:
+	main._open_themes()
+	await wait(0.6)
+	var chip: Control = main.theme_picker._row.get_child(3)
+	print("window=", get_window().size, " visible_rect=", get_viewport().get_visible_rect(), " final=", get_viewport().get_final_transform())
+	print("chip global=", chip.get_global_rect(), " screen_pos=", chip.get_screen_position(), " canvas xform=", chip.get_global_transform_with_canvas())
+	for p in [chip.get_screen_position() + Vector2(20, 20), chip.get_global_rect().get_center()]:
+		var m := InputEventMouseMotion.new()
+		m.position = p
+		Input.parse_input_event(m)
+		await get_tree().process_frame
+		await get_tree().process_frame
+		var h := get_viewport().gui_get_hovered_control()
+		print("at ", p, " hovered=", h.get_path() if h else "none")
+
+
+func s_tap_still_works() -> void:
+	main._open_settings()
+	await wait(0.6)
+	var opened := [""]
+	main.settings.open_requested.connect(func(t: String) -> void: opened[0] = t)
+	var row := _first_button_in(main.settings.body)
+	await _finger_drag(row.get_global_rect().get_center(), Vector2.ZERO, 1)
+	print("tap settings row -> open_requested=", opened[0])
+	await wait(0.4)
+	for m in [main.settings, main.stats_panel]:
+		if m.visible:
+			m.close()
+	await wait(0.5)
+	main._open_themes()
+	await wait(0.6)
+	var chip: Control = main.theme_picker._row.get_child(2)
+	await _finger_drag(chip.get_global_rect().get_center(), Vector2(4, 0), 2)
+	print("tap (4 px wobble) on chip 3 -> selected=", main.theme_picker._selected.get("id", ""))

@@ -206,6 +206,7 @@ func _build_chips() -> void:
 		v.add_child(tag)
 		_row.add_child(b)
 		_chips[it.id] = b
+	UiStyle.touch_scroll(_scroll)
 
 
 func _preview_widget(it: Dictionary) -> Control:

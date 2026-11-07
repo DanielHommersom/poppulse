@@ -97,5 +97,39 @@ One-time non-consumable. Unlocks Stage levels 13–30, full Reflex stats, 5 prem
 - **Sign-in required:** nee
 - **Notes:**
 ```
-No account needed. Premium is a one-time non-consumable (Settings ▸ Premium); ads are shown only in the free version and never during play. After the first game the app asks for ad consent where required (Google UMP), shows a short explanation and then Apple's App Tracking Transparency prompt. Pass & Play is local multiplayer on one device.
+No account needed. Premium is a one-time non-consumable (Settings ▸ Premium); ads are shown only in the free version and never during play. Right after the intro on first launch the app asks for ad consent where required (Google UMP), shows a short explanation and then Apple's App Tracking Transparency prompt. Pass & Play is local multiplayer on one device.
+```
+
+## App Review — antwoord op Guideline 2.1 (Information Needed, 31 okt 2026)
+
+Plak in App Review Information ▸ **Notes** (2.951/4.000 tekens):
+
+```
+SCREEN RECORDING
+Attached / linked: a recording on a physical iPhone running the latest iOS. It starts at app launch and shows the splash screens, all five game modes, the ad consent and App Tracking Transparency prompts right after the intro, the Premium screen with a sandbox purchase, Premium content (Stage levels 13-30) and Restore Purchases. The app has no accounts, no login and no user-generated content.
+
+1. PURPOSE AND AUDIENCE
+Pop Pulse is a short-session neon arcade game for teens and adults (13+). Bubbles light up on a grid and the player taps them in time. It trains reaction speed, focus and short-term memory in rounds of about one minute, and offers a quick, satisfying break and a friendly competition with yourself or friends on one device.
+
+2. HOW TO USE THE MAIN FEATURES
+No login, setup or sample files are needed; the app works offline.
+- Choose a mode at the bottom of the main screen and tap PLAY: Score (60 s, combos), Reflex (reaction time in ms), Memory (repeat the sequence), Stages (30 levels with stars), Pass & Play (2-4 players take turns on one device).
+- Daily Challenge: the card at the top of the main screen.
+- Settings: the gear icon (top right) - Records, Style (themes, bubble styles, sound packs), Premium, sound, haptics, accessibility, Restore Purchases, ad privacy choices, Privacy Policy, Terms of Use.
+- Premium (one-time non-consumable "Pop Pulse Premium"): Settings > Premium, or tap a locked Stage level (13-30). It unlocks levels 13-30, full Reflex stats, premium themes, bubble styles and sound packs, and removes all ads. Restore Purchases is on the Premium screen and in Settings > Purchases.
+- Ads (free version only): optional rewarded videos (continue a run, extra Daily Challenge try, play a locked level once, try a premium style for 24 hours) and occasional interstitials between games, never during play.
+
+3. EXTERNAL SERVICES
+- Apple In-App Purchase (StoreKit), with RevenueCat for receipt validation and restoring Premium.
+- Google AdMob for ads and Google User Messaging Platform for the ad consent form.
+- Apple App Tracking Transparency.
+- GitHub Pages hosts the Privacy Policy, Terms of Use, Support page and a small seasonal-events file (no personal data is sent).
+- WhatsApp is only opened via a share link when the player taps "Tell a friend".
+No accounts, analytics SDKs or AI services are used.
+
+4. REGIONAL DIFFERENCES
+The game and its content are the same in all regions. The only differences: Google's ad consent form appears only where required by law (EEA, UK, Switzerland and certain US states), ad content varies by region, and the Premium price is shown in the local currency.
+
+5. REGULATED INDUSTRY / THIRD-PARTY MATERIAL
+Not applicable. Pop Pulse is not in a regulated industry and contains no protected third-party material; all artwork, sounds, levels and the name are original works of Digital Diamonds. Ads are delivered by Google AdMob under our AdMob agreement.
 ```

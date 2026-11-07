@@ -25,3 +25,26 @@ func test_consent_button_visibility() -> void:
 	check(not bool(st.personalized), "denied consent -> non-personalised")
 	st.clear()
 	st.merge(saved)
+
+
+func test_rewarded_units_per_placement() -> void:
+	var cfg := {"units": {"ios": {"rewarded": {"test": "TEST", "release": "ca-app-pub-1/shared",
+		"placements": {"continue": "ca-app-pub-1/continue", "daily_retry": "", "level_trial": "ca-app-pub-1/level"}}}}}
+	var rel := AdMobAds.new(cfg, true)
+	eq(rel.unit_for("continue"), "ca-app-pub-1/continue", "own unit when filled in")
+	eq(rel.unit_for("daily_retry"), "ca-app-pub-1/shared", "empty → shared unit")
+	eq(rel.unit_for("style_trial"), "ca-app-pub-1/shared", "missing → shared unit")
+	eq(rel.rewarded_units().size(), 3, "each distinct unit preloaded once")
+	var dbg := AdMobAds.new(cfg, false)
+	eq(dbg.unit_for("continue"), "TEST", "debug always uses the test unit")
+	eq(dbg.rewarded_units().size(), 1, "debug preloads one test ad")
+
+
+func test_release_config_has_unit_per_button() -> void:
+	var rel := AdMobAds.new(GameMode.load_config("res://data/ads.json"), true)
+	var seen := {}
+	for p in ["continue", "daily_retry", "level_trial", "style_trial"]:
+		var u := rel.unit_for(p)
+		check(u.begins_with("ca-app-pub-3366446717708247/") and u != "ca-app-pub-3366446717708247/3435736524", "%s has its own unit" % p)
+		seen[u] = true
+	eq(seen.size(), 4, "four different rewarded units")

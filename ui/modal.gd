@@ -91,6 +91,7 @@ var _closing := false
 func open() -> void:
 	_closing = false
 	_on_open()
+	UiStyle.touch_scroll(scroll)
 	show()
 	_fit()
 	modulate.a = 0.0
@@ -125,6 +126,7 @@ func is_open() -> bool:
 func refresh() -> void:
 	if visible:
 		_on_open()
+		UiStyle.touch_scroll(scroll)
 		await get_tree().process_frame
 		_fit()
 

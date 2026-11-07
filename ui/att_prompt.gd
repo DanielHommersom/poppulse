@@ -1,7 +1,7 @@
 class_name AttPrompt
 extends Modal
 ## Our own explanation right before Apple's App Tracking Transparency dialog
-## (shown once, after the first finished game and the consent form). Apple
+## (shown once on a fresh install, right after the splash and the consent form). Apple
 ## allows a pre-prompt as long as it doesn't pressure or reward; the only
 ## button continues to the system dialog, where the player decides.
 
@@ -23,8 +23,8 @@ func _on_open() -> void:
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	body.add_child(title)
 	for line in [
-		"%s is free to play thanks to ads." % AppInfo.NAME,
-		"On the next screen, iOS asks whether ads may use your activity to be more relevant to you.",
+		"Ads pay for new levels, themes and events — and keep every mode free for everyone.",
+		"On the next screen, iOS asks if ads may be more relevant to you. Allowing it means fewer random ads, not more ads.",
 		"Either choice is fine — the game plays exactly the same.",
 	]:
 		var l := UiStyle.label(line, 26, UiStyle.DIM_TEXT)

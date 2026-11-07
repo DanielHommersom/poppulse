@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "_note": "Raise version to apply changes. Bounds in core/ad_config.gd; out-of-range values are ignored.",
+  "interstitial": {
+    "min_sessions": 2,
+    "first_session_after_runs": 3,
+    "runs_between": 3,
+    "min_seconds_between": 90,
+    "skip_after_record": false,
+    "skip_first_run_per_mode": true,
+    "skip_after_rewarded": true
+  },
+  "session_gap_seconds": 1800
+}

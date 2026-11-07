@@ -31,6 +31,18 @@ static func font() -> Font:
 const MIN_TEXT_ALPHA := 0.55
 
 
+## Touch scrolling (iOS): a finger that lands on a button inside a scroll area
+## must still scroll it. Buttons stop input by default, so the ScrollContainer
+## never saw the drag; with PASS it does, and the dead zone keeps a tap a tap.
+## Call after (re)building the scroll's content.
+static func touch_scroll(scroll: ScrollContainer) -> void:
+	scroll.scroll_deadzone = 14
+	for n in scroll.find_children("*", "Control", true, false):
+		var c := n as Control
+		if c.mouse_filter == Control.MOUSE_FILTER_STOP:
+			c.mouse_filter = Control.MOUSE_FILTER_PASS
+
+
 static func text_color(c: Color) -> Color:
 	return Color(c, maxf(c.a, MIN_TEXT_ALPHA))
 

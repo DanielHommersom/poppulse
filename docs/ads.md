@@ -1,6 +1,6 @@
 # Advertenties, consent en ATT
 
-Alles zit achter `Platform` (`autoload/platform.gd`): `can_show_rewarded`, `show_rewarded`, `maybe_show_interstitial`, `start_ads_after_first_game`, `show_ad_privacy_options`. Backend op een toestel: `platform/admob_ads.gd`; desktop / zonder native plugin: `platform/mock_ads.gd`.
+Alles zit achter `Platform` (`autoload/platform.gd`): `can_show_rewarded`, `show_rewarded`, `maybe_show_interstitial`, `start_ads`, `show_ad_privacy_options`. Backend op een toestel: `platform/admob_ads.gd`; desktop / zonder native plugin: `platform/mock_ads.gd`.
 
 ## Plugin (geïnstalleerd)
 
@@ -17,7 +17,7 @@ Alles zit achter `Platform` (`autoload/platform.gd`): `can_show_rewarded`, `show
 
 ## Volgorde bij de eerste keer
 
-1. Speler speelt zijn eerste potje (nooit een prompt bij app-start).
+1. Direct na de splashscreens bij de **eerste start** (zoals NeonSolitaire), vóórdat er een advertentie geladen wordt. Zo ziet ook een App Store-reviewer de tracking-vraag meteen.
 2. **Google UMP** (`AdMobAds.request_consent`): het GDPR/TCF-formulier waar dat nodig is (EER/VK).
 3. **Eigen uitleg** (`ui/att_prompt.gd`, "Keep Pop Pulse free" → CONTINUE), daarna **Apple's tracking-vraag (ATT)** via de godot-x/att-plugin (singleton `GodotxATT`). De tekst in Apple's venster is `NSUserTrackingUsageDescription` in de export-preset. Is de status al bepaald (of beperkt), dan verschijnt geen van beide.
 4. De Ads-SDK start. Gepersonaliseerd alleen met GDPR-toestemming (of niet vereist) **én** ATT "authorized"; anders `npa=1`.
@@ -33,7 +33,7 @@ Premium → de SDK wordt nooit gestart en er worden nooit ads geladen of getoond
 
 ## Instelling
 
-Settings ▸ PRIVACY & LEGAL ▸ **CHANGE AD CONSENT** opent Google's privacy-opties. De knop staat er alleen als: geen Premium, de consent-flow heeft gedraaid (na het 1e potje) én UMP zegt dat privacy-opties verplicht zijn (`privacy_options_requirement_status == REQUIRED`: EER/VK/CH, gereguleerde US-staten). Elders zou Google's formulier niet verschijnen. Na sluiten wordt de nieuwe keuze direct toegepast (`npa` voor volgende advertenties; de SDK leest ook de nieuwe TCF-string).
+Settings ▸ PRIVACY & LEGAL ▸ **CHANGE AD CONSENT** opent Google's privacy-opties. De knop staat er alleen als: geen Premium, de consent-flow heeft gedraaid (na de splash bij de eerste start) én UMP zegt dat privacy-opties verplicht zijn (`privacy_options_requirement_status == REQUIRED`: EER/VK/CH, gereguleerde US-staten). Elders zou Google's formulier niet verschijnen. Na sluiten wordt de nieuwe keuze direct toegepast (`npa` voor volgende advertenties; de SDK leest ook de nieuwe TCF-string).
 
 ## Frequentie (build 2, `data/ads.json`)
 

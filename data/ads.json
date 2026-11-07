@@ -3,7 +3,13 @@
     "ios": {
       "rewarded": {
         "test": "ca-app-pub-3940256099942544/1712485313",
-        "release": "ca-app-pub-3366446717708247/3435736524"
+        "release": "ca-app-pub-3366446717708247/3435736524",
+        "placements": {
+          "continue": "ca-app-pub-3366446717708247/6999653961",
+          "daily_retry": "ca-app-pub-3366446717708247/2619369913",
+          "level_trial": "ca-app-pub-3366446717708247/1747327283",
+          "style_trial": "ca-app-pub-3366446717708247/3713968896"
+        }
       },
       "interstitial": {
         "test": "ca-app-pub-3940256099942544/4411468910",
